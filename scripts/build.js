@@ -24,7 +24,7 @@ const configFactory = require('../config/webpack.config');
 const paths = require('../config/paths');
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
-const printHostingInstructions = require('react-dev-utils/printHostingInstructions');
+// const printHostingInstructions = require('react-dev-utils/printHostingInstructions');
 const FileSizeReporter = require('react-dev-utils/FileSizeReporter');
 const printBuildError = require('react-dev-utils/printBuildError');
 
@@ -102,13 +102,13 @@ checkBrowsers(paths.appPath, isInteractive)
       const publicUrl = paths.publicUrl;
       const publicPath = config.output.publicPath;
       const buildFolder = path.relative(process.cwd(), paths.appBuild);
-      printHostingInstructions(
-        appPackage,
-        publicUrl,
-        publicPath,
-        buildFolder,
-        useYarn
-      );
+      // printHostingInstructions(
+      //   appPackage,
+      //   publicUrl,
+      //   publicPath,
+      //   buildFolder,
+      //   useYarn
+      // );
     },
     err => {
       console.log(chalk.red('Failed to compile.\n'));
