@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import ReactDOM from 'react-dom';
-// import ChatStore from 'flux/stores/ChatStore';
+import ReactDOM           from 'react-dom';
+import {ChatStore}        from 'stores'
 import Linkify from 'react-linkify';
 // import EquipmentDisplay from 'components/common/EquipmentDisplay';
 // import EditHeroActions from 'flux/actions/EditHeroActions';
@@ -23,9 +23,13 @@ class ChatBodyScroll extends Component {
     constructor(props, context) {
       super(props, context)
 
+      const {messageCache, currentChannel} = ChatStore.get()
+
       this.state = {
-        messageCache: []
+        messageCache: messageCache[currentChannel]
       }
+
+      this.onGotMessage = this.onGotMessage.bind(this)
     }
 
     shouldComponentUpdate( nextProps, nextState ) {
@@ -48,6 +52,7 @@ class ChatBodyScroll extends Component {
                       //     <div className="chat-msg" style={{color:'#337ab7', pointerEvents:'all', cursor:'pointer'}} onClick={this.onGameItemLinkClick.bind(this,m.gameItem)}>{EquipmentDisplay.getName(m.gameItem)}</div>
                       //   </div>
                       // );
+                      return(<div></div>)
                     } else if( m.command || m.notification ) {
                       return (
                         <div className="chat-message-field" key={i} style={{color:m.color||'#fff',fontWeight:m.notification?'bold':'normal'}}>
@@ -172,7 +177,7 @@ class ChatBodyScroll extends Component {
 
         case 'Krate':
           return(
-            <span><a href='http://dungeonteamdatabase.com' target='_blank'>Krate</a></span>
+            <span><a href='http://dungeonteamdatabase.com' target='_blank' rel="noopener noreferrer">Krate</a></span>
           );
 
         case 'Donate':
@@ -274,17 +279,17 @@ class ChatBodyScroll extends Component {
     }
 
     onGotMessage() {
-        // this.setState({
-        //   messageCache: ChatStore.getAll().messageCache[ ChatStore.getAll().currentChannel ]
-        // });
+        this.setState({
+          messageCache: ChatStore.get().messageCache[ ChatStore.get().currentChannel ]
+        });
     }
 
     componentDidMount() {
-        // ChatStore.on( ChatStore.GOT_MESSAGE_EVENT, this.onGotMessage );
+        ChatStore.on( ChatStore.GOT_MESSAGE_EVENT, this.onGotMessage );
     }
 
     componentWillUnmount() {
-        // ChatStore.removeListener( ChatStore.GOT_MESSAGE_EVENT, this.onGotMessage );
+        ChatStore.removeListener( ChatStore.GOT_MESSAGE_EVENT, this.onGotMessage );
     }
 }
 export default ChatBodyScroll

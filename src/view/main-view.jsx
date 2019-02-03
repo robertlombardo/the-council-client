@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Chat} from './components/index.js'
+import {Chat} from 'view/components'
 
 class MainView extends Component {
     render() {

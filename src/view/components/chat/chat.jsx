@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import ChatBodyScroll from './chat-body-scroll.jsx';
-// import ChatActions from 'flux/actions/ChatActions';
+import ReactDOM           from 'react-dom';
+import ChatBodyScroll     from './chat-body-scroll.jsx'
+import {ChatActions}      from 'action-creators'
 // import ApplicationStore from 'flux/stores/ApplicationStore';
-// import ChatStore from 'flux/stores/ChatStore';
 import './chat.css'
 
 class Chat extends Component {
@@ -21,7 +21,7 @@ class Chat extends Component {
     render() {
         return (
             <div className={this.state.expanded?'chat-root chat-root-max':'chat-root'} ref='chatRoot' id='chatRoot'>
-                <a className={this.state.expanded?"btn size-toggle-btn size-toggle-btn-max":"btn size-toggle-btn"} onClick={this.toggleExpanded}>{this.getArrow()}</a>
+                <div className={this.state.expanded?"btn size-toggle-btn size-toggle-btn-max":"btn size-toggle-btn"} onClick={this.toggleExpanded}>{this.getArrow()}</div>
                 <p className='players-online'>Players Online: {this.state.playersOnline}</p>
                 <div className={this.state.expanded?"chat chat-max":"chat"}>
                     <div className={this.state.expanded?"chat-body-wrapper chat-body-wrapper-max":"chat-body-wrapper"}> 
@@ -31,7 +31,7 @@ class Chat extends Component {
                         <ul className="form-list">
                             <li className="msg-input-li">
                                 <textarea className="form-control msg-input" 
-                                    id = 'chat-input'
+                                    id = 'chat_input'
                                     name='foo'
                                     type="text"
                                     placeholder="Say something..."
@@ -52,9 +52,9 @@ class Chat extends Component {
 
     getArrow() {
         if( this.state.expanded ) {
-            return( <img src="assets/img/down_arrow.png"/> );
+            return( <img src="assets/img/down_arrow.png" alt="Minimize"/> );
         } else {
-            return( <img src="assets/img/up_arrow.png"/> );
+            return( <img src="assets/img/up_arrow.png" alt="Maximize"/> );
         }
     }
 
@@ -64,19 +64,15 @@ class Chat extends Component {
         });
     }
 
-    onTextEntered(e) {
+    onTextEntered(event) {
         // no page reload
-        e.preventDefault();
+        event.preventDefault()
         
-        console.log(this.refs);
-        var text = this.refs.enteredText.value;
-        
-        if( text !== '' ) {
-            // ChatActions.enterMessage( text );
-        }
+        var text = this.refs.enteredText.value
+        if (text !== ``) ChatActions.enterMessage(text)
             
         // clear the field
-        this.refs.enteredText.value = '';
+        this.refs.enteredText.value = ``
     }
 
     onNumPlayersOnline() {
@@ -88,13 +84,18 @@ class Chat extends Component {
 
         // ApplicationStore.on( ApplicationStore.NUM_PLAYERS_ONLINE, this.onNumPlayersOnline );
 
-        // document.getElementById("chat-input").keypress( (e) => {
-        //     if( e.which===13 && !e.shiftKey ) { 
-        //         e.preventDefault();       
-        //         this.onTextEntered( e );
-        //         return false;
-        //     }
-        // });
+        // add ENTER key listener for executing input
+        const node = ReactDOM.findDOMNode(this)
+        if (node instanceof HTMLElement) {
+            const chat_input = node.querySelector(`#chat_input`)
+            if (chat_input) chat_input.onkeypress = event => {
+                if (event.which===13 && !event.shiftKey) { // ENTER key 
+                    event.preventDefault()      
+                    this.onTextEntered(event)
+                    return false
+                }
+            }
+        }
     }
 
     componentWillUnmount() {
