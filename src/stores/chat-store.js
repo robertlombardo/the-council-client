@@ -1,4 +1,4 @@
-import {EventEmitter} from 'events'
+import EventEmitter   from 'events'
 import Dispatcher     from 'dispatcher'
 // import Config from 'constants/Config';
 // import ChatActions from 'flux/actions/ChatActions';
@@ -99,7 +99,7 @@ Dispatcher.on(Dispatcher.ENTER_MESSAGE, action => {
             color : userObject.chatTextColor 
         });
     } else {
-        pushToLog( currentChannel, {
+        pushToLog(currentChannel, {
             text: 'make a username', // text('chat.make_a_username'),
             notification: true,
             color: NOTIFICATION_COLOR
@@ -274,7 +274,7 @@ function pushToLog(channel, message) {
 }
 
 function publish(message) {
-    api_socket.emit('publish', {
+    api_socket.emit(`publish`, {
         channel: currentChannel,        
         message
     })

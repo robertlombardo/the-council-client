@@ -51,7 +51,7 @@ class Chat extends Component {
     }
 
     getArrow() {
-        if( this.state.expanded ) {
+        if(this.state.expanded) {
             return( <img src="assets/img/down_arrow.png" alt="Minimize"/> );
         } else {
             return( <img src="assets/img/up_arrow.png" alt="Maximize"/> );

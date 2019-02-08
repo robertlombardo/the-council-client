@@ -25,10 +25,11 @@ api_socket = io.connect(API_ADDRESS, {
     transports : [`websocket`]
 })
 
-api_socket.on(`error`, api_socket_err => {
-  console.warn({api_socket_err})
-})
-
 api_socket.on(`connected`, () => {
 	AppActions.APISocketConnected(api_socket)
+})
+
+api_socket.on(`error`, api_socket_err => {
+  console.error({api_socket_err})
+  AppActions.APISocketError(api_socket_err)
 })
