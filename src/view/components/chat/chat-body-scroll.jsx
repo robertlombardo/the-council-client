@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
-import ReactDOM           from 'react-dom';
-import {ChatStore}        from 'stores'
-import Linkify from 'react-linkify';
+import React, {Component}    from 'react'
+import ReactDOM              from 'react-dom'
+import {GameTranscriptStore} from 'stores'
+import Linkify               from 'react-linkify'
 // import EquipmentDisplay from 'components/common/EquipmentDisplay';
 // import EditHeroActions from 'flux/actions/EditHeroActions';
 
@@ -23,7 +23,7 @@ class ChatBodyScroll extends Component {
     constructor(props, context) {
       super(props, context)
 
-      const {messageCache, currentChannel} = ChatStore.get()
+      const {messageCache, currentChannel} = GameTranscriptStore.get()
 
       this.state = {
         messageCache: messageCache[currentChannel]
@@ -279,17 +279,18 @@ class ChatBodyScroll extends Component {
     }
 
     onGotMessage() {
+        const {messageCache, currentChannel} = GameTranscriptStore.get()
         this.setState({
-          messageCache: ChatStore.get().messageCache[ ChatStore.get().currentChannel ]
+          messageCache: messageCache[currentChannel]
         });
     }
 
     componentDidMount() {
-        ChatStore.on( ChatStore.GOT_MESSAGE_EVENT, this.onGotMessage );
+        GameTranscriptStore.on(GameTranscriptStore.GOT_MESSAGE_EVENT, this.onGotMessage)
     }
 
     componentWillUnmount() {
-        ChatStore.removeListener( ChatStore.GOT_MESSAGE_EVENT, this.onGotMessage );
+        GameTranscriptStore.removeListener(GameTranscriptStore.GOT_MESSAGE_EVENT, this.onGotMessage)
     }
 }
 export default ChatBodyScroll

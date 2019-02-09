@@ -1,7 +1,7 @@
-import AppActions  from './app-actions'
-import ChatActions from './chat-actions'
+import AppActions         from './app-actions'
+import GameCommandActions from './game-command-actions'
 
 export {
 	AppActions,
-	ChatActions,
+	GameCommandActions,
 }

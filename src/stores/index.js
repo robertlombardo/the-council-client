@@ -1,7 +1,7 @@
 import APIStore  from './api-store'
-import ChatStore from './chat-store'
+import GameTranscriptStore from './game-transcript-store'
 
 export {
 	APIStore,
-	ChatStore,
+	GameTranscriptStore,
 }

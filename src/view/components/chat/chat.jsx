@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
-import ReactDOM           from 'react-dom';
-import ChatBodyScroll     from './chat-body-scroll.jsx'
-import {ChatActions}      from 'action-creators'
+import React, {Component}   from 'react';
+import ReactDOM             from 'react-dom';
+import ChatBodyScroll       from './chat-body-scroll.jsx'
+import {GameCommandActions} from 'action-creators'
 // import ApplicationStore from 'flux/stores/ApplicationStore';
 import './chat.css'
 
@@ -69,7 +69,7 @@ class Chat extends Component {
         event.preventDefault()
         
         var text = this.refs.enteredText.value
-        if (text !== ``) ChatActions.enterMessage(text)
+        if (text !== ``) GameCommandActions.enterMessage(text)
             
         // clear the field
         this.refs.enteredText.value = ``

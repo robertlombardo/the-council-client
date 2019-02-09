@@ -30,7 +30,7 @@ var messageCache = {
 };
 var currentChannel = 'global';
 
-const ChatStore = Object.assign({}, EventEmitter.prototype, {
+const GameTranscriptStore = Object.assign({}, EventEmitter.prototype, {
     SUBSCRIBED_TO_CHANNEL       : 'SUBSCRIBED_TO_CHANNEL',
     UNSUBSCRIBED_FROM_CHANNEL   : 'UNSUBSCRIBED_FROM_CHANNEL',      
     DISPLAY_NAME_EVENT          : 'DISPLAY_NAME_EVENT',
@@ -45,7 +45,7 @@ const ChatStore = Object.assign({}, EventEmitter.prototype, {
         }
     }
 })
-export default ChatStore
+export default GameTranscriptStore
 
 Dispatcher.on(Dispatcher.API_SOCKET_CONNECTED, action => {
     api_socket = action.payload.api_socket
@@ -59,12 +59,12 @@ Dispatcher.on(Dispatcher.API_SOCKET_CONNECTED, action => {
     })
 })
 
-Dispatcher.on(Dispatcher.ENTER_MESSAGE, action => {
+Dispatcher.on(Dispatcher.ENTER_GAME_COMMAND, action => {
    const {text} = action.payload
 
    if(text[0] === '/' ) {
         const command = text.split( ' ' )[0];
-        const target = text.slice( command.length+1 );
+        // const target = text.slice( command.length+1 );
 
         switch( command ) {
             // case '/help': 
@@ -270,7 +270,7 @@ function onChatMessage(data) {
  
 function pushToLog(channel, message) {
     messageCache[channel].push( message );
-    ChatStore.emit(ChatStore.GOT_MESSAGE_EVENT)
+    GameTranscriptStore.emit(GameTranscriptStore.GOT_MESSAGE_EVENT)
 }
 
 function publish(message) {

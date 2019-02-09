@@ -1,9 +1,9 @@
 import Dispatcher from 'dispatcher'
 
-const ChatActions = {
-    enterMessage: text => {
+const GameCommandActions = {
+    enterGameCommand: text => {
         Dispatcher.dispatch({
-            type    : Dispatcher.ENTER_MESSAGE,
+            type    : Dispatcher.ENTER_GAME_COMMAND,
             payload : {text}
         })
     },
@@ -30,4 +30,4 @@ const ChatActions = {
     //     });
     // }
 }
-export default ChatActions
+export default GameCommandActions
