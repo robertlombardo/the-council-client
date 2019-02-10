@@ -40,16 +40,24 @@ Dispatcher.on(Dispatcher.GOT_API_SOCKET, action => {
 
     // TODO - remove listeners when socket closed/destroyed/broken
     api_socket.on(`player_joined_room`, onPlayerJoinedRoom)
-    api_socket.on(`player_said`, onPlayerSaid)
+    api_socket.on(`player_said`,        onPlayerSaid)
 
     listeners_registered = true
 })
 
+Dispatcher.on(Dispatcher.UNKNOWN_COMMAND_ENTERED, action => {
+    pushToTranscript(currentChannel, {
+        notification : true,
+        color        : `#ff0000`,
+        text         : `Unknown command: ${action.payload.command}.`,
+    })
+})
+
 function onPlayerJoinedRoom(player) {
     pushToTranscript(`room`, {
-        notification: true,
-        color: `#6f6f6f`,
-        text: `${player.display_name} enters the area.`
+        notification : true,
+        color        : `#6f6f6f`,
+        text         : `${player.display_name} enters the area.`,
     })
 }
 
