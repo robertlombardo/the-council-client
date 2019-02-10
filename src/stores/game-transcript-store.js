@@ -15,20 +15,15 @@ let playerId = 'rob_player_id'
 // var connected = false;
 
 // the stuff we serve
-var userObject = {
-    displayName: 'rob',
-    gender: 'male',
-    chatTextColor: '#ffffff'
-};
 var messageCache = {
-    global: [ 
-        {user: 'Wakefield Studios', text: 'Welcome to The Commons!', color: NOTIFICATION_COLOR},
+    room: [ 
+        {user: 'Wakefield Studios', text: 'You have entered the world of The Council ...', color: NOTIFICATION_COLOR},
         // { /*notification: true,*/ text: text('ui.join_forum_msg'), color: NOTIFICATION_COLOR },
         // { /*notification: true,*/ text: text('ui.join_discord_msg'), color: NOTIFICATION_COLOR },
         // { /*notification: true,*/ text: text('chat.help_msg'), color: NOTIFICATION_COLOR },
     ]
 };
-var currentChannel = 'global';
+var currentChannel = `room`;
 
 const GameTranscriptStore = Object.assign({}, EventEmitter.prototype, {
     SUBSCRIBED_TO_CHANNEL       : 'SUBSCRIBED_TO_CHANNEL',
@@ -39,7 +34,6 @@ const GameTranscriptStore = Object.assign({}, EventEmitter.prototype, {
     
     get: () => {
         return {
-            userObject,
             messageCache,
             currentChannel
         }
@@ -47,11 +41,13 @@ const GameTranscriptStore = Object.assign({}, EventEmitter.prototype, {
 })
 export default GameTranscriptStore
 
-Dispatcher.on(Dispatcher.API_SOCKET_CONNECTED, action => {
+Dispatcher.on(Dispatcher.GOT_API_SOCKET, action => {
     api_socket = action.payload.api_socket
     api_socket.on(`subscribed`, onSubscribed)
     api_socket.on(`chatMessage`, onChatMessage)
     // TODO - remove listeners when socket closed/destroyed/broken
+
+    api_socket.on(`player_joined_room`, onPlayerJoinedRoom)
 
     api_socket.emit(`subscribe`, {
         playerId,
@@ -59,64 +55,13 @@ Dispatcher.on(Dispatcher.API_SOCKET_CONNECTED, action => {
     })
 })
 
-Dispatcher.on(Dispatcher.ENTER_GAME_COMMAND, action => {
-   const {text} = action.payload
-
-   if(text[0] === '/' ) {
-        const command = text.split( ' ' )[0];
-        // const target = text.slice( command.length+1 );
-
-        switch( command ) {
-            // case '/help': 
-            //     pushToLog( currentChannel, {
-            //         text: text('chat.help_info')[0],
-            //         notification: true,
-            //         color: NOTIFICATION_COLOR
-            //     });
-            //     for( var i = 1; i < text('chat.help_info').length; ++i ) {
-            //         pushToLog( currentChannel, {
-            //             text: text('chat.help_info')[i],
-            //             color: NOTIFICATION_COLOR
-            //         });
-            //     }
-            //     break;
-
-            // case '/challenge':
-            //     ArenaLobbyActions.challengePlayerByName( target, GameStateStore.getAll().gameState.competitionData.lastMatchType||'arena1v1' );
-            //     break;
-
-            default: 
-                api_socket.emit( 'chatCommand', {
-                    playerId,
-                    command: text
-                });
-                break;
-        }        
-    } else if (userObject.displayName && userObject.displayName !== `New Player`) {
-        publish({
-            user  : userObject.displayName,
-            text,
-            color : userObject.chatTextColor 
-        });
-    } else {
-        pushToLog(currentChannel, {
-            text: 'make a username', // text('chat.make_a_username'),
-            notification: true,
-            color: NOTIFICATION_COLOR
-        });
-    }
-})
-
-// ApplicationDispatcher.register( function(payload) {
-//     if( payload.action.actionType === ApplicationDispatcher.STARTUP ) {
-//         startup();
-//     } else if( payload.action.actionType === ApplicationDispatcher.SOCKET_CONNECTED ) {
-//         socket = payload.action.socket;
-//         onSocketConnected();
-//     }
-    
-//     return true;
-// });
+function onPlayerJoinedRoom(player) {
+    pushToLog(`room`, {
+        notification: true,
+        color: `#6f6f6f`,
+        text: `${player.display_name} enters the area.`
+    })
+}
 
 // const HANDLERS = {
 //     [ChatDispatcher.ENTER_MESSAGE]: onMessageEntered,
@@ -132,7 +77,6 @@ Dispatcher.on(Dispatcher.ENTER_GAME_COMMAND, action => {
 //     return true;
 // });
     
-
 // function startup() {
 //     try {
 //         // console.log( 'Config.SERVER_ADDRESS: ' + Config.SERVER_ADDRESS, true );
@@ -172,9 +116,9 @@ Dispatcher.on(Dispatcher.ENTER_GAME_COMMAND, action => {
 
 // function onAccountDetails( data ) {
 //     playerId = data.userId;
-//     userObject.displayName = data.scriptData.displayName || 'New Player';
+//     userObject.display_name = data.scriptData.display_name || 'New Player';
 //     userObject.gender = data.scriptData.chat? (data.scriptData.chat.gender||'male') : 'male';
-//     userObject.chatTextColor = data.scriptData.chat? (data.scriptData.chat.textColor||'#ffffff') : '#ffffff';
+//     userObject.chat_text_color = data.scriptData.chat? (data.scriptData.chat.textColor||'#ffffff') : '#ffffff';
     
 //     if( !connected ) { 
 //         connected = true;
@@ -186,18 +130,18 @@ Dispatcher.on(Dispatcher.ENTER_GAME_COMMAND, action => {
 // }
 
 function onSubscribed(data) {
-    currentChannel = data.channel;
+    // currentChannel = data.channel;
 
-    if( userObject.displayName && userObject.displayName!=='New Player' && process.env.NODE_ENV!=='development' ) {
-        publish({ 
-            user: userObject.displayName,
-            // command: '/enter_channel',
-            // target: data.target,
-            // text: text.getChatCommandEmote( userObject.displayName, '/enter_channel', null ),
-            text: '<enters the channel>',
-            color: userObject.chatTextColor
-        });
-    }
+    // if( userObject.display_name && userObject.display_name!=='New Player' && process.env.NODE_ENV!=='development' ) {
+    //     publish({ 
+    //         user: userObject.display_name,
+    //         // command: '/enter_channel',
+    //         // target: data.target,
+    //         // text: text.getChatCommandEmote( userObject.display_name, '/enter_channel', null ),
+    //         text: '<enters the channel>',
+    //         color: userObject.chat_text_color
+    //     });
+    // }
 }
 
 // function onChatCommandResponse( data ) {
@@ -254,11 +198,11 @@ function onSubscribed(data) {
 
 //         default: 
 //             publish({ 
-//                 user: userObject.displayName,
+//                 user: userObject.display_name,
 //                 command: data.command,
 //                 target: data.target,
-//                 text: text.getChatCommandEmote( userObject.displayName, data.command, (data.target&&data.targetIsOnline)?data.target:null ),
-//                 color: userObject.chatTextColor
+//                 text: text.getChatCommandEmote( userObject.display_name, data.command, (data.target&&data.targetIsOnline)?data.target:null ),
+//                 color: userObject.chat_text_color
 //             });
 //             break;
 //     }
@@ -273,15 +217,10 @@ function pushToLog(channel, message) {
     GameTranscriptStore.emit(GameTranscriptStore.GOT_MESSAGE_EVENT)
 }
 
-function publish(message) {
-    api_socket.emit(`publish`, {
-        channel: currentChannel,        
-        message
-    })
-}
+
 
 // function onNewUsername( name ) {
-//     userObject.displayName = name || 'New Player';
+//     userObject.display_name = name || 'New Player';
 // }
 
 // function requestChatTextColorChange( action ) {
@@ -292,13 +231,13 @@ function publish(message) {
 // }
 
 // function onChatTextColorChanged( data ) {
-//     userObject.chatTextColor = data.newColor;
+//     userObject.chat_text_color = data.newColor;
 // }
 
 // function onGameNotification( action ) {
 //     publish({ 
 //         notification: true,
-//         text: text.getGameNotificationText( userObject.displayName, action.type, action.data ),
+//         text: text.getGameNotificationText( userObject.display_name, action.type, action.data ),
 //         color: NOTIFICATION_COLOR
 //     });
 // }
@@ -307,6 +246,6 @@ function publish(message) {
 //     publish({
 //         gameItemLink: true,
 //         gameItem: action.gameItem,
-//         user: userObject.displayName
+//         user: userObject.display_name
 //     });
 // }

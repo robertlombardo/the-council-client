@@ -2,32 +2,28 @@ import Dispatcher from 'dispatcher'
 
 const GameCommandActions = {
     enterGameCommand: text => {
+        const command      = text.split(` `)[0]
+        const command_body = text.slice(command.length + 1)
+
+        console.log({command, command_body})
+
         Dispatcher.dispatch({
-            type    : Dispatcher.ENTER_GAME_COMMAND,
+            type    : Dispatcher.GAME_COMMAND_ENTERED,
             payload : {text}
         })
     },
-
-    // setChatTextColor: function( color ) {
-    //     ChatDispatcher.handleChatAction({
-    //         actionType: ChatDispatcher.SET_CHAT_TEXT_COLOR,
-    //         color
-    //     });
-    // },
-
-    // gameNotification: function( type, data ) {
-    //     ChatDispatcher.handleChatAction({
-    //         actionType: ChatDispatcher.GAME_NOTIFICATION,
-    //         type,
-    //         data
-    //     });
-    // },
-
-    // linkGameItem: function( gameItem ) {
-    //     ChatDispatcher.handleChatAction({
-    //         actionType: ChatDispatcher.LINK_GAME_ITEM,
-    //         gameItem
-    //     });
-    // }
 }
 export default GameCommandActions
+
+const say = message => {
+    // api_socket.emit(`publish`, {
+    //     channel: currentChannel,        
+    //     message
+    // })
+}
+
+const FUNCS_BY_COMMAND = {
+    [`'`]   : say,
+    [`"`]   : say,
+    [`say`] : say,
+}

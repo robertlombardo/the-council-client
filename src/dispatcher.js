@@ -2,9 +2,9 @@ import EventEmitter from 'events'
 
 const Dispatcher = Object.assign({}, EventEmitter.prototype, {
     // action types
-    API_SOCKET_CONNECTED : `API_SOCKET_CONNECTED`,
+    GOT_API_SOCKET       : `GOT_API_SOCKET`,
     API_SOCKET_ERROR     : `API_SOCKET_ERROR`,
-	ENTER_GAME_COMMAND   : `ENTER_GAME_COMMAND`,
+	GAME_COMMAND_ENTERED : `GAME_COMMAND_ENTERED`,
 
     dispatch: action => {
         Dispatcher.emit(action.type, action);

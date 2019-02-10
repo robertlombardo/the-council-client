@@ -9,7 +9,7 @@ it(`dispatches the API_SOCKET_CONNECTED message + payload`, done => {
 		done()
 	})
 
-	AppActions.APISocketConnected(mock_api_socket)
+	AppActions.shareAPISocket(mock_api_socket)
 })
 
 it(`dispatches the API_SOCKET_ERROR message + payload`, done => {
@@ -20,5 +20,5 @@ it(`dispatches the API_SOCKET_ERROR message + payload`, done => {
 		done()
 	})
 
-	AppActions.APISocketError(mock_api_err)
+	AppActions.shareAPISocketError(mock_api_err)
 })

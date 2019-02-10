@@ -69,7 +69,7 @@ class Chat extends Component {
         event.preventDefault()
         
         var text = this.refs.enteredText.value
-        if (text !== ``) GameCommandActions.enterMessage(text)
+        if (text !== ``) GameCommandActions.enterGameCommand(text)
             
         // clear the field
         this.refs.enteredText.value = ``

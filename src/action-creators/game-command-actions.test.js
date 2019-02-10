@@ -4,7 +4,7 @@ import Dispatcher         from 'dispatcher'
 it(`dispatches the ENTER_MESSAGE message + payload`, done => {
 	const mock_message = `foo`
 
-	Dispatcher.on(Dispatcher.ENTER_GAME_COMMAND, action => {
+	Dispatcher.on(Dispatcher.GAME_COMMAND_ENTERED, action => {
 		expect(action.payload.text).toBe(mock_message)
 		done()
 	})

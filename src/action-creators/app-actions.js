@@ -1,14 +1,14 @@
 import Dispatcher from 'dispatcher'
 
 const AppActions = {
-	APISocketConnected: api_socket => {
+	shareAPISocket: api_socket => {
 		Dispatcher.dispatch({
-			type    : Dispatcher.API_SOCKET_CONNECTED,
+			type    : Dispatcher.GOT_API_SOCKET,
 			payload : {api_socket} 
 		})
 	},
 
-	APISocketError: api_socket_err => {
+	shareAPISocketError: api_socket_err => {
 		Dispatcher.dispatch({
 			type    : Dispatcher.API_SOCKET_ERROR,
 			payload : {api_socket_err} 
