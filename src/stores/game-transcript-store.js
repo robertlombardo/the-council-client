@@ -60,12 +60,18 @@ Dispatcher.on(Dispatcher.UNKNOWN_COMMAND_ENTERED, action => {
 })
 
 Dispatcher.on(Dispatcher.PLAYER_ROOM_CHANGED, action => {
-    const {description, exits} = action.payload.player.room
+    const {description, players, exits} = action.payload.player.room
 
     pushToTranscript(`room`, {
         notification : true,
         color        : `#bdbdbd`,
         text         : description,
+    })
+
+    pushToTranscript(`room`, {
+        notification : true,
+        color        : `#469f95`,
+        text         : `People in the area: ${players.map(p => p.display_name).join(`, `)}`,
     })
 
     pushToTranscript(`room`, {
