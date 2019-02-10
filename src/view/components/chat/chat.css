@@ -56,7 +56,7 @@
     width: 100%;
     height: 19vh;
     word-wrap: break-word;
-    word-break: break-all;
+    /*word-break: break-all;*/
 }
 .chat-body-wrapper-max {
     height: 69vh;

@@ -10,10 +10,12 @@ var player = {
     gender          : undefined,
     chat_text_color : undefined,
     room_id         : undefined,
+    room            : undefined,
 }
 
 const PlayerStateStore = Object.assign({}, EventEmitter.prototype, {
-	GOT_PLAYER_STATE: `GOT_PLAYER_STATE`,
+	GOT_PLAYER_STATE     : `GOT_PLAYER_STATE`,
+	PLAYER_CHANGED_ROOMS : `PLAYER_CHANGED_ROOMS`,
 
 	get: () => {
 		return Object.assign({}, {
@@ -29,7 +31,9 @@ Dispatcher.on(Dispatcher.GOT_API_SOCKET, action => {
 	api_socket.on(`player_state`, onPlayerState)
 })
 
-function onPlayerState(player) {
-	player = player
-	PlayerStateStore.emit(PlayerStateStore.GOT_PLAYER_STATE, player)
+function onPlayerState(new_player_state) {
+	const old_player_state = Object.assign({}, player)
+	player                 = new_player_state
+
+	PlayerStateStore.emit(PlayerStateStore.GOT_PLAYER_STATE, {old_player_state, new_player_state})
 }

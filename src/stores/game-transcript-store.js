@@ -39,7 +39,7 @@ Dispatcher.on(Dispatcher.GOT_API_SOCKET, action => {
     api_socket = action.payload.api_socket
 
     // TODO - remove listeners when socket closed/destroyed/broken
-    api_socket.on(`player_joined_room`, onPlayerJoinedRoom)
+    api_socket.on(`player_joined_room`, onAnyPlayerJoinedRoom)
     api_socket.on(`player_said`,        onPlayerSaid)
 
     listeners_registered = true
@@ -53,11 +53,27 @@ Dispatcher.on(Dispatcher.UNKNOWN_COMMAND_ENTERED, action => {
     })
 })
 
-function onPlayerJoinedRoom(player) {
+Dispatcher.on(Dispatcher.PLAYER_ROOM_CHANGED, action => {
+    const {description, exits} = action.payload.player.room
+
+    pushToTranscript(`room`, {
+        notification : true,
+        color        : `#bdbdbd`,
+        text         : description,
+    })
+
+    pushToTranscript(`room`, {
+        notification : true,
+        color        : `#1ab10c`,
+        text         : `Exits: ${Object.keys(exits).join(`, `)}`,
+    })
+})
+
+function onAnyPlayerJoinedRoom(data) {
     pushToTranscript(`room`, {
         notification : true,
         color        : `#6f6f6f`,
-        text         : `${player.display_name} enters the area.`,
+        text         : `${data.player.display_name} enters the area.`,
     })
 }
 
