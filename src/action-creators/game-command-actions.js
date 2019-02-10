@@ -48,9 +48,14 @@ const playerGo = command_body => {
     })
 }
 
+const look = command_body => {
+    Dispatcher.dispatch({type: Dispatcher.LOOK})
+}
+
 const FUNCS_BY_COMMAND = {
-    [`'`]   : playerSay,
-    [`"`]   : playerSay,
-    [`say`] : playerSay,
-    [`go`]  : playerGo,
+    [`'`]    : playerSay,
+    [`"`]    : playerSay,
+    [`say`]  : playerSay,
+    [`go`]   : playerGo,
+    [`look`] : look,
 }

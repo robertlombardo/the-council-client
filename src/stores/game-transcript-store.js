@@ -59,8 +59,16 @@ Dispatcher.on(Dispatcher.UNKNOWN_COMMAND_ENTERED, action => {
     })
 })
 
+Dispatcher.on(Dispatcher.LOOK, action => {
+    doRoomDescription(player.room)
+})
+
 Dispatcher.on(Dispatcher.PLAYER_ROOM_CHANGED, action => {
-    const {description, players, exits} = action.payload.player.room
+    doRoomDescription(action.payload.player.room)
+})
+
+function doRoomDescription(room) {
+    const {description, players, exits} = room
 
     pushToTranscript(`room`, {
         notification : true,
@@ -79,7 +87,7 @@ Dispatcher.on(Dispatcher.PLAYER_ROOM_CHANGED, action => {
         color        : `#1ab10c`,
         text         : `Exits: ${Object.keys(exits).join(`, `)}`,
     })
-})
+}
 
 function onOtherPlayerJoinedRoom(data) {
     pushToTranscript(`room`, {
