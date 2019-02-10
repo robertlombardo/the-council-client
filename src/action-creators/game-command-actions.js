@@ -1,29 +1,52 @@
 import Dispatcher from 'dispatcher'
+import {
+    APIStore,
+    PlayerStateStore,
+} from 'stores'
 
 const GameCommandActions = {
     enterGameCommand: text => {
-        const command      = text.split(` `)[0]
-        const command_body = text.slice(command.length + 1)
+        let command, command_body
+        const first_char = text[0]
+        if (first_char === `'` || first_char === `"`) {
+            command = `say`
+            command_body = text.slice(1)
+        } else {
+            command      = text.split(` `)[0]
+            command_body = text.slice(command.length + 1)   
+        }
+        
+        const func = FUNCS_BY_COMMAND[command]
+        if (func) {
+            func(command_body)
 
-        console.log({command, command_body})
-
-        Dispatcher.dispatch({
-            type    : Dispatcher.GAME_COMMAND_ENTERED,
-            payload : {text}
-        })
+            Dispatcher.dispatch({
+                type    : Dispatcher.GAME_COMMAND_ENTERED,
+                payload : {text, command, command_body}
+            })
+        } else {
+            Dispatcher.dispatch({
+                type    : Dispatcher.UNKNOWN_COMMAND_ENTERED,
+                payload : {command}
+            })
+        }
     },
 }
 export default GameCommandActions
 
-const say = message => {
-    // api_socket.emit(`publish`, {
-    //     channel: currentChannel,        
-    //     message
-    // })
+let api_socket
+APIStore.on(APIStore.API_SOCKET_CONNECTED, as => {
+    api_socket = as
+})
+
+const playerSay = command_body => {
+    api_socket.emit(`player_say`, {        
+        command_body
+    })
 }
 
 const FUNCS_BY_COMMAND = {
-    [`'`]   : say,
-    [`"`]   : say,
-    [`say`] : say,
+    [`'`]   : playerSay,
+    [`"`]   : playerSay,
+    [`say`] : playerSay,
 }

@@ -1,4 +1,5 @@
 import Dispatcher from 'dispatcher'
+import {APIStore} from 'stores'
 
 const AppActions = {
 	shareAPISocket: api_socket => {
@@ -16,3 +17,12 @@ const AppActions = {
 	},
 }
 export default AppActions
+
+APIStore.on(APIStore.API_SOCKET_CONNECTED, api_socket => {
+    AppActions.shareAPISocket(api_socket)
+})        
+
+APIStore.on(APIStore.API_SOCKET_ERROR, api_socket_err => {
+    console.error({api_socket_err})
+    AppActions.shareAPISocketError(api_socket_err)
+})

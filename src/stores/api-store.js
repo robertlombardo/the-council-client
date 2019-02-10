@@ -9,7 +9,6 @@ const secure = process.env.NODE_ENV === `production` || process.env.NODE_ENV ===
 
 // the stuff we serve
 let api_socket = io.connect(API_ADDRESS, {
-    path       : `/socket.io`,
     secure,
     transports : [`websocket`]
 })
