@@ -1,8 +1,5 @@
 import Dispatcher from 'dispatcher'
-import {
-    APIStore,
-    PlayerStateStore,
-} from 'stores'
+import {APIStore} from 'stores'
 
 const GameCommandActions = {
     enterGameCommand: text => {
@@ -15,7 +12,7 @@ const GameCommandActions = {
             command      = text.split(` `)[0]
             command_body = text.slice(command.length + 1)   
         }
-        
+
         const func = FUNCS_BY_COMMAND[command]
         if (func) {
             func(command_body)
@@ -45,8 +42,15 @@ const playerSay = command_body => {
     })
 }
 
+const playerGo = command_body => {
+    api_socket.emit(`player_go`, {
+        command_body
+    })
+}
+
 const FUNCS_BY_COMMAND = {
     [`'`]   : playerSay,
     [`"`]   : playerSay,
     [`say`] : playerSay,
+    [`go`]  : playerGo,
 }

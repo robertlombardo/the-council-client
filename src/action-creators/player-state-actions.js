@@ -8,10 +8,19 @@ const PlayerStateActions = {
 			payload : {player} 
 		})
 	},
+
+	sharePlayerState: player => {
+		Dispatcher.dispatch({
+			type    : Dispatcher.GOT_PLAYER_STATE,
+			payload : {player} 
+		})
+	},
 }
 export default PlayerStateActions
 
-PlayerStateStore.on(PlayerStateStore.GOT_PLAYER_STATE, data => {
+PlayerStateStore.on(PlayerStateStore.PLAYER_STATE_CHANGE, data => {
 	const {new_player_state, old_player_state} = data
-	if (new_player_state.room_id != old_player_state.room_id) PlayerStateActions.roomChange(new_player_state)
+	if (new_player_state.room_id !== old_player_state.room_id) PlayerStateActions.roomChange(new_player_state)
+
+	PlayerStateActions.sharePlayerState(data.new_player_state)
 })        

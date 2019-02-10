@@ -3,6 +3,7 @@ import Dispatcher   from 'dispatcher'
 
 // private
 let api_socket
+let listeners_registered = false
 
 // the stuff we serve
 var player = {
@@ -14,8 +15,7 @@ var player = {
 }
 
 const PlayerStateStore = Object.assign({}, EventEmitter.prototype, {
-	GOT_PLAYER_STATE     : `GOT_PLAYER_STATE`,
-	PLAYER_CHANGED_ROOMS : `PLAYER_CHANGED_ROOMS`,
+	PLAYER_STATE_CHANGE  : `PLAYER_STATE_CHANGE`,
 
 	get: () => {
 		return Object.assign({}, {
@@ -26,14 +26,18 @@ const PlayerStateStore = Object.assign({}, EventEmitter.prototype, {
 export default PlayerStateStore
 
 Dispatcher.on(Dispatcher.GOT_API_SOCKET, action => {
+	if (listeners_registered) return
+
 	api_socket = action.payload.api_socket
 
 	api_socket.on(`player_state`, onPlayerState)
+
+	listeners_registered = true
 })
 
 function onPlayerState(new_player_state) {
 	const old_player_state = Object.assign({}, player)
 	player                 = new_player_state
 
-	PlayerStateStore.emit(PlayerStateStore.GOT_PLAYER_STATE, {old_player_state, new_player_state})
+	PlayerStateStore.emit(PlayerStateStore.PLAYER_STATE_CHANGE, {old_player_state, new_player_state})
 }

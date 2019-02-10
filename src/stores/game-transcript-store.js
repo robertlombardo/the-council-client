@@ -7,6 +7,7 @@ const NOTIFICATION_COLOR = `#d7d00e`;
 // private
 let api_socket
 let listeners_registered = false
+let player
 
 // the stuff we serve
 var messageCache = {
@@ -39,10 +40,15 @@ Dispatcher.on(Dispatcher.GOT_API_SOCKET, action => {
     api_socket = action.payload.api_socket
 
     // TODO - remove listeners when socket closed/destroyed/broken
-    api_socket.on(`player_joined_room`, onAnyPlayerJoinedRoom)
+    api_socket.on(`player_joined_room`, onOtherPlayerJoinedRoom)
+    api_socket.on(`player_left_room`,   onAnyPlayerLeftRoom)
     api_socket.on(`player_said`,        onPlayerSaid)
 
     listeners_registered = true
+})
+
+Dispatcher.on(Dispatcher.GOT_PLAYER_STATE, action => {
+    player = action.payload.player
 })
 
 Dispatcher.on(Dispatcher.UNKNOWN_COMMAND_ENTERED, action => {
@@ -69,11 +75,29 @@ Dispatcher.on(Dispatcher.PLAYER_ROOM_CHANGED, action => {
     })
 })
 
-function onAnyPlayerJoinedRoom(data) {
+function onOtherPlayerJoinedRoom(data) {
     pushToTranscript(`room`, {
         notification : true,
         color        : `#6f6f6f`,
         text         : `${data.player.display_name} enters the area.`,
+    })
+}
+
+function onAnyPlayerLeftRoom(data) {
+    const is_me = data.player.id === player.id
+
+    const text = `${is_me ? `You`:data.player.display_name} exit${is_me ? ``:`s`} to the ${data.exit_key}.`
+
+    pushToTranscript(`room`, {
+        notification : true,
+        color        : `#6f6f6f`,
+        text,
+    })
+
+    if (is_me) pushToTranscript(`room`, {
+        notification : true,
+        color        : `#6f6f6f`,
+        text         : `...`,
     })
 }
 
@@ -86,10 +110,6 @@ function onPlayerSaid(data) {
         color : chat_text_color,
         text,
     })
-}
-
-function onChatMessage(data) {
-    pushToTranscript(data.channel, data.message)
 }
  
 function pushToTranscript(channel, message) {

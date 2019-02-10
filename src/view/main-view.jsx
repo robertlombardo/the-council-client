@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import {AppActions}       from 'action-creators'
 import {Chat}             from 'view/components'
 
 class MainView extends Component {
