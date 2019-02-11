@@ -1,7 +1,7 @@
-import React, {Component}    from 'react'
-import ReactDOM              from 'react-dom'
-import {GameTranscriptStore} from 'stores'
-import Linkify               from 'react-linkify'
+import React, {Component} from 'react'
+import ReactDOM           from 'react-dom'
+import {GameLogStore}     from 'stores'
+import Linkify            from 'react-linkify'
 // import EquipmentDisplay from 'components/common/EquipmentDisplay';
 // import EditHeroActions from 'flux/actions/EditHeroActions';
 
@@ -17,32 +17,32 @@ class ChatBodyScroll extends Component {
     //   this.onGameItemLinkClick = this.onGameItemLinkClick.bind(this);
 
     //   return {
-    //       messageCache: ChatStore.getAll().messageCache[ ChatStore.getAll().currentChannel ]        
+    //       game_log: ChatStore.getAll().game_log[ ChatStore.getAll().current_channel ]        
     //   };       
     // },
     constructor(props, context) {
       super(props, context)
 
-      const {messageCache, currentChannel} = GameTranscriptStore.get()
+      const {game_log, current_channel} = GameLogStore.get()
 
       this.state = {
-        messageCache: messageCache[currentChannel]
+        game_log: game_log[current_channel]
       }
 
       this.onGotMessage = this.onGotMessage.bind(this)
     }
 
     shouldComponentUpdate( nextProps, nextState ) {
-        return nextState.messageCache.length > lastMessageCacheLength;
+        return nextState.game_log.length > lastMessageCacheLength;
     }
 
     render() {
-       lastMessageCacheLength = this.state.messageCache.length;
+       lastMessageCacheLength = this.state.game_log.length;
 
        return(
          <div className="chat-body-scroll" id='chatBodyScroll'>
             <div className="chat-body">
-                {this.state.messageCache.map( (m,i) => {
+                {this.state.game_log.map( (m,i) => {
                     // console.log({m});
                     if( m.gameItemLink ) {
                       // console.log(EquipmentDisplay.getName(m.gameItem))
@@ -279,18 +279,18 @@ class ChatBodyScroll extends Component {
     }
 
     onGotMessage() {
-        const {messageCache, currentChannel} = GameTranscriptStore.get()
+        const {game_log, current_channel} = GameLogStore.get()
         this.setState({
-          messageCache: messageCache[currentChannel]
+          game_log: game_log[current_channel]
         });
     }
 
     componentDidMount() {
-        GameTranscriptStore.on(GameTranscriptStore.GOT_MESSAGE_EVENT, this.onGotMessage)
+        GameLogStore.on(GameLogStore.GOT_MESSAGE_EVENT, this.onGotMessage)
     }
 
     componentWillUnmount() {
-        GameTranscriptStore.removeListener(GameTranscriptStore.GOT_MESSAGE_EVENT, this.onGotMessage)
+        GameLogStore.removeListener(GameLogStore.GOT_MESSAGE_EVENT, this.onGotMessage)
     }
 }
 export default ChatBodyScroll

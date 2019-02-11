@@ -1,5 +1,5 @@
-import Dispatcher from 'dispatcher'
-import {APIStore} from 'stores'
+import Dispatcher       from 'dispatcher'
+import GameCommandFuncs from './game-command-funcs'
 
 const GameCommandActions = {
     enterGameCommand: text => {
@@ -13,7 +13,7 @@ const GameCommandActions = {
             command_body = text.slice(command.length + 1)   
         }
 
-        const func = FUNCS_BY_COMMAND[command]
+        const func = GameCommandFuncs[command]
         if (func) {
             func(command_body)
 
@@ -30,32 +30,3 @@ const GameCommandActions = {
     },
 }
 export default GameCommandActions
-
-let api_socket
-APIStore.on(APIStore.API_SOCKET_CONNECTED, as => {
-    api_socket = as
-})
-
-const playerSay = command_body => {
-    api_socket.emit(`player_say`, {        
-        command_body
-    })
-}
-
-const playerGo = command_body => {
-    api_socket.emit(`player_go`, {
-        command_body
-    })
-}
-
-const look = command_body => {
-    Dispatcher.dispatch({type: Dispatcher.LOOK})
-}
-
-const FUNCS_BY_COMMAND = {
-    [`'`]    : playerSay,
-    [`"`]    : playerSay,
-    [`say`]  : playerSay,
-    [`go`]   : playerGo,
-    [`look`] : look,
-}

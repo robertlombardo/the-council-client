@@ -14,7 +14,7 @@ let api_socket = io.connect(API_ADDRESS, {
 })
 
 const APIStore = Object.assign({}, EventEmitter.prototype, {
-	API_SOCKET_CONNECTED : `GOT_API_SOCKET`,
+	API_SOCKET_CONNECTED : `API_SOCKET_CONNECTED`,
 	API_SOCKET_ERROR     : `API_SOCKET_ERROR`,
 
 	get: () => {
