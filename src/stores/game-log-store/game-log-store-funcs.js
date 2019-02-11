@@ -11,7 +11,7 @@ const GameLogStoreFuncs = {
 		    {
 		        notification : true,
 		        color        : `#469f95`,
-		        text         : `People in the area: ${players.map(p => p.display_name).join(`, `)}`,
+		        text         : `People in the area: ${Object.keys(players).map(id => players[id].display_name).join(`, `)}`,
 		    },
 		    {
 		        notification : true,

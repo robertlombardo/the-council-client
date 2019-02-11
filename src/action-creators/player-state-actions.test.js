@@ -2,8 +2,8 @@ import Dispatcher           from 'dispatcher'
 import {PlayerStateActions} from 'action-creators'
 import {PlayerStateStore}   from 'stores'
 
-const mock_old_player_state = {room_id: `a`, room: {players: [], exits: {}}}
-const mock_new_player_state = {room_id: `b`, room: {players: [], exits: {}}}
+const mock_old_player_state = {room_id: `a`, room: {players: {}, exits: {}}}
+const mock_new_player_state = {room_id: `b`, room: {players: {}, exits: {}}}
 
 it(`dispatches the PLAYER_ROOM_CHANGED message + payload when roomChange() is called`, done => {
 	Dispatcher.on(Dispatcher.PLAYER_ROOM_CHANGED, action => {

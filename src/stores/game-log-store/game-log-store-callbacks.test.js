@@ -17,9 +17,7 @@ const mock_player = {
 	room_id: `room_0`,
 	room: {
 		description: `a mock room`,
-		players: [
-			{id: `2`, display_name: `flerpy`}
-		],
+		players: {[`2`]: {display_name: `flerpy`}},
 		exits: [{
 			north: {
 				to: `room_n`

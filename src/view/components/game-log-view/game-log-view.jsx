@@ -1,11 +1,11 @@
 import React, {Component}   from 'react';
 import ReactDOM             from 'react-dom';
-import ChatBodyScroll       from './chat-body-scroll.jsx'
+import GameLogBodyScroll    from './game-log-body-scroll.jsx'
 import {GameCommandActions} from 'action-creators'
 // import ApplicationStore from 'flux/stores/ApplicationStore';
-import './chat.css'
+import './game-log-view.css'
 
-class Chat extends Component {
+class GameLogView extends Component {
 
     constructor(props, context) {
         super(props, context)
@@ -20,14 +20,14 @@ class Chat extends Component {
     
     render() {
         return (
-            <div className={this.state.expanded?'chat-root chat-root-max':'chat-root'} ref='chatRoot' id='chatRoot'>
-                <div className={this.state.expanded?"btn size-toggle-btn size-toggle-btn-max":"btn size-toggle-btn"} onClick={this.toggleExpanded}>{this.getArrow()}</div>
+            <div className={this.state.expanded?'game-log-root game-log-root-max':'game-log-root'} ref='chatRoot' id='chatRoot'>
+                {/*<div className={this.state.expanded?"btn size-toggle-btn size-toggle-btn-max":"btn size-toggle-btn"} onClick={this.toggleExpanded}>{this.getArrow()}</div>*/}
                 <p className='players-online'>Players Online: {this.state.playersOnline}</p>
-                <div className={this.state.expanded?"chat chat-max":"chat"}>
-                    <div className={this.state.expanded?"chat-body-wrapper chat-body-wrapper-max":"chat-body-wrapper"}> 
-                        <ChatBodyScroll id="chatBodyScroll"/>
+                <div className={this.state.expanded?"game-log game-log-max":"game-log"}>
+                    <div className={this.state.expanded?"game-log-body-wrapper game-log-body-wrapper-max":"game-log-body-wrapper"}> 
+                        <GameLogBodyScroll id="chatBodyScroll"/>
                     </div>
-                    <form className="chat-input-form" onSubmit={this.onTextEntered} autoComplete="narbles">
+                    <form className="game-log-input-form" onSubmit={this.onTextEntered} autoComplete="narbles">
                         <ul className="form-list">
                             <li className="msg-input-li">
                                 <textarea className="form-control msg-input" 
@@ -50,13 +50,13 @@ class Chat extends Component {
         )
     }
 
-    getArrow() {
-        if(this.state.expanded) {
-            return( <img src="assets/img/down_arrow.png" alt="Minimize"/> );
-        } else {
-            return( <img src="assets/img/up_arrow.png" alt="Maximize"/> );
-        }
-    }
+    // getArrow() {
+    //     if(this.state.expanded) {
+    //         return( <img src="assets/img/down_arrow.png" alt="Minimize"/> );
+    //     } else {
+    //         return( <img src="assets/img/up_arrow.png" alt="Maximize"/> );
+    //     }
+    // }
 
     toggleExpanded() {
         this.setState({
@@ -103,4 +103,4 @@ class Chat extends Component {
     }
     
 }
-export default Chat
+export default GameLogView

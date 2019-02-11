@@ -1,5 +1,5 @@
-import Chat from './chat/chat.jsx'
+import GameLogView from './game-log-view/game-log-view.jsx'
 
 export {
-	Chat
+	GameLogView
 }

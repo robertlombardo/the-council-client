@@ -10,7 +10,7 @@ var MySpan = withImportantStyle('span');
 
 var lastMessageCacheLength = 0;
 
-class ChatBodyScroll extends Component {
+class GameLogBodyScroll extends Component {
   
     // getInitialState: function() {   
     //   this.getUsernameDisplay = this.getUsernameDisplay.bind(this);
@@ -40,30 +40,30 @@ class ChatBodyScroll extends Component {
        lastMessageCacheLength = this.state.game_log.length;
 
        return(
-         <div className="chat-body-scroll" id='chatBodyScroll'>
-            <div className="chat-body">
+         <div className="game-log-body-scroll" id='chatBodyScroll'>
+            <div className="game-log-body">
                 {this.state.game_log.map( (m,i) => {
                     // console.log({m});
                     if( m.gameItemLink ) {
                       // console.log(EquipmentDisplay.getName(m.gameItem))
                       // return(
-                      //   <div className="chat-message-field" key={i}>
-                      //     <div className="chat-display-name">{this.getUsernameDisplay(m.user)}: </div>
-                      //     <div className="chat-msg" style={{color:'#337ab7', pointerEvents:'all', cursor:'pointer'}} onClick={this.onGameItemLinkClick.bind(this,m.gameItem)}>{EquipmentDisplay.getName(m.gameItem)}</div>
+                      //   <div className="game-log-message-field" key={i}>
+                      //     <div className="game-log-display-name">{this.getUsernameDisplay(m.user)}: </div>
+                      //     <div className="game-log-msg" style={{color:'#337ab7', pointerEvents:'all', cursor:'pointer'}} onClick={this.onGameItemLinkClick.bind(this,m.gameItem)}>{EquipmentDisplay.getName(m.gameItem)}</div>
                       //   </div>
                       // );
                       return(<div></div>)
                     } else if( m.command || m.notification ) {
                       return (
-                        <div className="chat-message-field" key={i} style={{color:m.color||'#fff',fontWeight:m.notification?'bold':'normal'}}>
-                          <div className="chat-msg emote">{m.text}</div>
+                        <div className="game-log-message-field" key={i} style={{color:m.color||'#fff',fontWeight:m.notification?'bold':'normal'}}>
+                          <div className="game-log-msg emote">{m.text}</div>
                         </div>
                       );
                     } else {
                       return (
-                        <div className="chat-message-field" key={i} style={{color:m.color||'#fff'}}>
-                          <div className="chat-display-name">{this.getUsernameDisplay(m.user)}: </div>
-                          <Linkify properties={{target:'_blank'}}><div className="chat-msg">{m.text}</div></Linkify>
+                        <div className="game-log-message-field" key={i} style={{color:m.color||'#fff'}}>
+                          <div className="game-log-display-name">{this.getUsernameDisplay(m.user)}: </div>
+                          <Linkify properties={{target:'_blank'}}><div className="game-log-msg">{m.text}</div></Linkify>
                         </div>
                       );
                     }
@@ -268,7 +268,7 @@ class ChatBodyScroll extends Component {
     }
 
     onGameItemLinkClick(gameItem) {
-      // console.log('ChatBodyScroll::onGameItemLinkClick()');
+      // console.log('GameLogBodyScroll::onGameItemLinkClick()');
       // console.log({gameItem});
       // EditHeroActions.selectItem( gameItem );
     }
@@ -293,5 +293,5 @@ class ChatBodyScroll extends Component {
         GameLogStore.removeListener(GameLogStore.GOT_MESSAGE_EVENT, this.onGotMessage)
     }
 }
-export default ChatBodyScroll
+export default GameLogBodyScroll
          

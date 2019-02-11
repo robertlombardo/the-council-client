@@ -3,7 +3,7 @@ import GameLogStoreFuncs from './game-log-store-funcs'
 it(`getRoomDescription() makes 3 log entries (description, players, exits`, () => {
 	const mock_room = {
 		description : `a mock room`,
-		players     : [{id: `1`, display_name: `flerpy`}],
+		players     : {[`1`]: {display_name: `flerpy`}},
 		exits       : {north: {to: `north_room`}}
 	}
 
