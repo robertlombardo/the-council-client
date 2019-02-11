@@ -6,3 +6,16 @@
 	margin: 5px 5px 5px 0;
 	background-color: $container-background-color;
 }
+
+.sidebar-view {
+	margin: 10px;
+	pointer-events: none;
+}
+
+.sidebar-view-title {
+	margin: 10px;
+	text-align: center;
+	font-size: 18px;
+	font-weight: bold;
+	color: $container-border-color;
+}

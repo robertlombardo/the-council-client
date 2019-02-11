@@ -28,13 +28,7 @@
 
 .game-log-message-field {
     display: table;
-    font-size: 0.8em;
     margin-bottom: 5px;
-}
-@media (max-width: 750px) {
-    .game-log-message-field {
-        font-size: 0.7em;
-    }
 }
 
 .game-log-display-name {

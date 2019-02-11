@@ -1,0 +1,36 @@
+@import 'style/color';
+
+.empire-facet-view {
+	margin: 5px;
+	padding: 10px;
+	border: 1px solid $sub-container-border-color;
+	border-radius: 2px;
+}
+
+.empire-facet-name {
+	margin: 0 0 15px;
+	text-align: center;
+	color: $sub-container-header-color;
+}
+
+.empire-facet-item {
+	margin: 5px 0 5px;
+	padding: 5px;
+	display: flex;
+	flex-direction: row;
+	color: $menu-text-color;
+	pointer-events: all;
+	cursor: pointer;
+}
+.empire-facet-item:hover {
+	color: $menu-text-mouseover-color;
+}
+
+.empire-facet-item-label {
+	width: 50%;
+	text-align: right;
+}
+
+.empire-facet-item-value {
+	margin-left: 10px;
+}

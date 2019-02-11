@@ -12,6 +12,7 @@ var player = {
     chat_text_color : undefined,
     room_id         : undefined,
     room            : undefined,
+    empire          : undefined,
 }
 
 const PlayerStateStore = Object.assign({}, EventEmitter.prototype, {

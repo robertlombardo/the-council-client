@@ -31,7 +31,6 @@ it(`logs the current room description on the Dispatcher.LOOK message`, done => {
 	Dispatcher.emit(Dispatcher.LOOK)
 	setTimeout(() => {
 		const room_log = GameLogStore.get().game_log.room
-		console.log({room_log})
 		const description_log = room_log[room_log.length - 3]
 		expect(description_log.text.includes(mock_player.room.description)).toBe(true)
 		done()
