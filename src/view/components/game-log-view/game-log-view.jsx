@@ -16,34 +16,27 @@ class GameLogView extends Component {
         }
 
         this.toggleExpanded = this.toggleExpanded.bind(this)
+        this.onTextEntered  = this.onTextEntered.bind(this)
     }
     
     render() {
         return (
             <div className={this.state.expanded?'game-log-root game-log-root-max':'game-log-root'} ref='chatRoot' id='chatRoot'>
                 {/*<div className={this.state.expanded?"btn size-toggle-btn size-toggle-btn-max":"btn size-toggle-btn"} onClick={this.toggleExpanded}>{this.getArrow()}</div>*/}
-                <p className='players-online'>Players Online: {this.state.playersOnline}</p>
+                {/*<p className='players-online'>Players Online: {this.state.playersOnline}</p>*/}
                 <div className={this.state.expanded?"game-log game-log-max":"game-log"}>
                     <div className={this.state.expanded?"game-log-body-wrapper game-log-body-wrapper-max":"game-log-body-wrapper"}> 
                         <GameLogBodyScroll id="chatBodyScroll"/>
                     </div>
                     <form className="game-log-input-form" onSubmit={this.onTextEntered} autoComplete="narbles">
-                        <ul className="form-list">
-                            <li className="msg-input-li">
-                                <textarea className="form-control msg-input" 
-                                    id = 'chat_input'
-                                    name='foo'
-                                    type="text"
-                                    placeholder="Say something..."
-                                    autoComplete="narbles"
-                                    ref="enteredText"/>
-                            </li>
-                            <li>
-                                <div>
-                                    <button type="submit" className="form-control btn btn-xs submit-btn">SEND</button>
-                                </div>
-                            </li>
-                        </ul>
+                        <textarea className="form-control msg-input" 
+                            id = 'chat_input'
+                            name='foo'
+                            type="text"
+                            placeholder="Enter a command..."
+                            autoComplete="narbles"
+                            ref="enteredText"/>
+                        <button type="submit" className="form-control btn btn-xs submit-btn" onClick={this.onTextEntered}>SEND</button>
                     </form>
                 </div>
             </div>      
@@ -80,6 +73,8 @@ class GameLogView extends Component {
     }
 
     componentDidMount() {
+        var text = this.refs.enteredText.focus()
+
         // TweenMax.from( this.refs.chatRoot, 0.3, {y:window.innerHeight} ).delay( 2.0 );
 
         // ApplicationStore.on( ApplicationStore.NUM_PLAYERS_ONLINE, this.onNumPlayersOnline );

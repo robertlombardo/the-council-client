@@ -55,7 +55,7 @@ class GameLogBodyScroll extends Component {
                       return(<div></div>)
                     } else if( m.command || m.notification ) {
                       return (
-                        <div className="game-log-message-field" key={i} style={{color:m.color||'#fff',fontWeight:m.notification?'bold':'normal'}}>
+                        <div className="game-log-message-field" key={i} style={{paddingLeft:'10px', color:m.color||'#fff',fontWeight:m.notification?'bold':'normal'}}>
                           <div className="game-log-msg emote">{m.text}</div>
                         </div>
                       );
