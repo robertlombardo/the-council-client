@@ -108,6 +108,7 @@ module.exports = function(webpackEnv) {
         loader: require.resolve(preProcessor),
         options: {
           sourceMap: isEnvProduction && shouldUseSourceMap,
+          includePaths: [path.resolve(__dirname, '../src/view')]
         },
       });
     }

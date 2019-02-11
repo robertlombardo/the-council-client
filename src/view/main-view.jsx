@@ -1,15 +1,20 @@
 import React, {Component} from 'react'
-import {GameLogView}      from 'view/components'
+import {
+    GameLogView,
+    Header,
+    Sidebar,
+} from 'view/components'
+import './main-view.scss'
 
 class MainView extends Component {
     render() {
         return (
             <div className="root-layout" id="root-layout">
-                {/*<div className="game-canvas" id="game-canvas"></div>*/}
-                <GameLogView />
-                {/*<Modals />*/}
-                {/*this.getKongRegistrationBtn()*/}
-                {/*<div className="overlay-canvas" id="overlay-canvas"></div>*/}
+                <div className="main-column">
+                    <Header />
+                    <GameLogView />
+                </div>
+                <Sidebar />
             </div>
         )
     }

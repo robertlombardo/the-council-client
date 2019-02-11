@@ -1,0 +1,8 @@
+@import 'style/color';
+
+.sidebar {
+	width: 300px;
+	min-width: 300px;
+	margin: 5px 5px 5px 0;
+	background-color: $container-background-color;
+}

@@ -1,0 +1,6 @@
+@import 'style/color';
+
+.container {
+	border: 1px solid $container-border-color;
+	background-color: $container-background-color;
+}

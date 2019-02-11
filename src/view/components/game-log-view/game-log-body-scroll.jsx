@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import ReactDOM           from 'react-dom'
 import {GameLogStore}     from 'stores'
 import Linkify            from 'react-linkify'
+import './game-log-body-scroll.scss'
 // import EquipmentDisplay from 'components/common/EquipmentDisplay';
 // import EditHeroActions from 'flux/actions/EditHeroActions';
 
