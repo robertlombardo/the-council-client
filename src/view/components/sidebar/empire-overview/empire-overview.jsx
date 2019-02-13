@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {PlayerStateStore} from 'stores'
+import {UIActions}        from 'action-creators'
 import './empire-overview.scss'
 
 const EMPIRE_FACET_NAMES = {
@@ -10,17 +11,17 @@ const EMPIRE_FACET_NAMES = {
 
 const EMPIRE_FACET_ITEM_NAMES = {
     // constructs
-    camps      : `Camps`,
+    camps     : `Camps`,
 
     // citizens
-    hunters    : `Hunters`,
-    gatherers  : `Gatherers`,
+    hunters   : `Hunters`,
+    gatherers : `Gatherers`,
 
     // resources
-    food       : `Food`,
-    wood       : `Wood`,
-    pelts      : `Pelts`,
-    leather    : `Leather`,
+    food      : `Food`,
+    wood      : `Wood`,
+    pelts     : `Pelts`,
+    leather   : `Leather`,
 }
 
 class EmpireOverview extends Component {
@@ -47,7 +48,7 @@ class EmpireOverview extends Component {
                             <div className="empire-facet-name">{EMPIRE_FACET_NAMES[empire_facet_key]}</div>
                             {Object.keys(empire[empire_facet_key]).map(empire_facet_item_key => {
                                 return (
-                                    <div className="empire-facet-item" key={empire_facet_item_key}>
+                                    <div className="empire-facet-item" key={empire_facet_item_key} onClick={this.onEmpireFacetItemClicked.bind(null, empire_facet_item_key)}>
                                         <div className="empire-facet-item-label">{EMPIRE_FACET_ITEM_NAMES[empire_facet_item_key]}:</div>
                                         <div className="empire-facet-item-value">{empire[empire_facet_key][empire_facet_item_key]}</div>
                                     </div>
@@ -72,6 +73,10 @@ class EmpireOverview extends Component {
         this.setState({
             empire: data.new_player_state.empire
         })
+    }
+
+    onEmpireFacetItemClicked(empire_facet_item_key) {
+        UIActions.selectHeaderControlView(empire_facet_item_key)
     }
     
 }
