@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import AvatarOverview     from './avatar-overview/avatar-overview'
 import ConstructView      from './construct-view/construct-view'
+import CitizenView        from './citizen-view/citizen-view'
 import {UIStateStore}     from 'stores'
 import './header-control-panel.scss'
 
@@ -10,6 +11,9 @@ const CONTROL_VIEWS = {
     camps           : ConstructView,
     villages        : ConstructView,
     hamlets         : ConstructView,
+
+    hunters         : CitizenView,
+    gatherers       : CitizenView,
 }
 
 class HeaderControlPanel extends Component {

@@ -16,7 +16,8 @@ var player = {
 }
 
 const PlayerStateStore = Object.assign({}, EventEmitter.prototype, {
-	PLAYER_STATE_CHANGE  : `PLAYER_STATE_CHANGE`,
+	PLAYER_STATE_CHANGE : `PLAYER_STATE_CHANGE`,
+	YIELD               : `YIELD`,
 
 	get: () => {
 		return Object.assign({}, {
@@ -45,8 +46,9 @@ function onPlayerState(new_player_state) {
 }
 
 function onYield(data) {
-	console.log('\onYield')
+	console.log('\nonYield')
 	console.log({data})
 
 	onPlayerState(data.player)
+	PlayerStateStore.emit(PlayerStateStore.YIELD, data)
 }

@@ -1,3 +1,32 @@
 .header-control-panel {
 	flex-grow: 1;
 }
+
+.header-empire-facet-view {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: row;
+}
+
+.header-empire-facet-view-quick-info {
+	width: 20%;
+	max-width: 150px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	pointer-events: none;
+}
+
+.header-empire-facet-view-title {
+	width: 100%;
+	text-align: center;
+	font-size: 18px;
+}
+
+.header-empire-facet-view-count {
+	width: 100%;
+	margin-top: 15px;
+	text-align: center;
+	font-size: 26px
+}

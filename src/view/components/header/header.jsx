@@ -5,9 +5,9 @@ import './header.scss'
 
 class Header extends Component {
 
-    constructor(props, context) {
-        super(props, context)
-    }
+    // constructor(props, context) {
+    //     super(props, context)
+    // }
     
     render() {
         return (

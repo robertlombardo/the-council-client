@@ -3,9 +3,9 @@ import './player-avatar.scss'
 
 class PlayerAvatar extends Component {
 
-    constructor(props, context) {
-        super(props, context)
-    }
+    // constructor(props, context) {
+    //     super(props, context)
+    // }
     
     render() {
         return (

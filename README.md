@@ -30,3 +30,4 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 ### TODO
 
 - Logger
+- empire facet item stats (show calculations for interval, yield, etc)
