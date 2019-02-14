@@ -1,5 +1,8 @@
 import React, {Component} from 'react'
-import {PlayerStateStore} from 'stores'
+import {
+    PlayerStateStore,
+    UIStateStore,
+}                         from 'stores'
 import {UIActions}        from 'action-creators'
 import './empire-overview.scss'
 
@@ -30,10 +33,12 @@ class EmpireOverview extends Component {
         super(props, context)
 
         this.state = {
-            empire: PlayerStateStore.get().player.empire || {}
+            empire                  : PlayerStateStore.get().player.empire || {},
+            header_control_view_key : UIStateStore.get().header_control_view_key 
         }
 
-        this.onPlayerStateChange = this.onPlayerStateChange.bind(this)
+        this.onPlayerStateChange        = this.onPlayerStateChange.bind(this)
+        this.onHeaderControlViewChanged = this.onHeaderControlViewChanged.bind(this)
     }
     
     render() {
@@ -44,13 +49,18 @@ class EmpireOverview extends Component {
                <div className="sidebar-view-title">Empire Overview</div>
                {Object.keys(empire).map(empire_facet_key => {
                     return (
-                        <div className="empire-facet-view" key={empire_facet_key}>
+                        <div className="sub-container empire-facet-view" key={empire_facet_key}>
                             <div className="empire-facet-name">{EMPIRE_FACET_NAMES[empire_facet_key]}</div>
                             {Object.keys(empire[empire_facet_key]).map(empire_facet_item_key => {
+                                const selected_class = this.state.header_control_view_key === empire_facet_item_key ? " empire-facet-item-selected" : ""
+
                                 return (
-                                    <div className="empire-facet-item" key={empire_facet_item_key} onClick={this.onEmpireFacetItemClicked.bind(null, empire_facet_item_key)}>
+                                    <div className={"empire-facet-item" + selected_class}
+                                         key={empire_facet_item_key}
+                                         onClick={this.onEmpireFacetItemClicked.bind(null, empire_facet_item_key)}
+                                    >
                                         <div className="empire-facet-item-label">{EMPIRE_FACET_ITEM_NAMES[empire_facet_item_key]}:</div>
-                                        <div className="empire-facet-item-value">{empire[empire_facet_key][empire_facet_item_key]}</div>
+                                        <div className="empire-facet-item-value">{empire[empire_facet_key][empire_facet_item_key].count}</div>
                                     </div>
                                 )
                             })}
@@ -61,18 +71,26 @@ class EmpireOverview extends Component {
         )
     }
 
-    componentWillMount() {
-        PlayerStateStore.on(PlayerStateStore.PLAYER_STATE_CHANGE, this.onPlayerStateChange)
-    }
-
-    componentWillUnmount() {
-        PlayerStateStore.removeListener(PlayerStateStore.PLAYER_STATE_CHANGE, this.onPlayerStateChange)
-    }
-
     onPlayerStateChange(data) {
         this.setState({
             empire: data.new_player_state.empire
         })
+    }
+
+    onHeaderControlViewChanged(new_header_control_view_key) {
+        this.setState({
+            header_control_view_key: new_header_control_view_key
+        })
+    }
+
+    componentWillMount() {
+        PlayerStateStore.on(PlayerStateStore.PLAYER_STATE_CHANGE, this.onPlayerStateChange)
+        UIStateStore.on(UIStateStore.HEADER_CONTROL_VIEW_CHANGED, this.onHeaderControlViewChanged)
+    }
+
+    componentWillUnmount() {
+        PlayerStateStore.removeListener(PlayerStateStore.PLAYER_STATE_CHANGE, this.onPlayerStateChange)
+        UIStateStore.removeListener(UIStateStore.HEADER_CONTROL_VIEW_CHANGED, this.onHeaderControlViewChanged)
     }
 
     onEmpireFacetItemClicked(empire_facet_item_key) {

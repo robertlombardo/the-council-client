@@ -32,6 +32,7 @@ Dispatcher.on(Dispatcher.GOT_API_SOCKET, action => {
 	api_socket = action.payload.api_socket
 
 	api_socket.on(`player_state`, onPlayerState)
+	api_socket.on(`yield`       , onYield)
 
 	listeners_registered = true
 })
@@ -41,4 +42,11 @@ function onPlayerState(new_player_state) {
 	player                 = new_player_state
 
 	PlayerStateStore.emit(PlayerStateStore.PLAYER_STATE_CHANGE, {old_player_state, new_player_state})
+}
+
+function onYield(data) {
+	console.log('\onYield')
+	console.log({data})
+
+	onPlayerState(data.player)
 }

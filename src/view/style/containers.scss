@@ -5,3 +5,10 @@
 	border-radius: 2px;
 	background-color: $container-background-color;
 }
+
+.sub-container {
+	margin: 5px;
+	padding: 10px;
+	border: 1px solid $sub-container-border-color;
+	border-radius: 2px;
+}

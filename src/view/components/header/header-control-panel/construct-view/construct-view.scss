@@ -1,0 +1,40 @@
+.contstruct-view {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: row;
+}
+
+.construct-view-quick-info {
+	width: 20%;
+	max-width: 150px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	pointer-events: none;
+}
+
+.connstruct-view-title {
+	width: 100%;
+	text-align: center;
+	font-size: 18px;
+}
+
+.construct-view-count {
+	width: 100%;
+	margin-top: 15px;
+	text-align: center;
+	font-size: 26px
+	
+}
+
+.construct-view-main-panel {
+	flex-grow: 1;
+	display: flex;
+	flex-direction: column
+}
+
+.construct-view-main-panel > div {
+	width: 100%;
+	flex-grow: 1;
+}

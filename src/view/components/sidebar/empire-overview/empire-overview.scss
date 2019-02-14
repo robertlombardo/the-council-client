@@ -1,12 +1,5 @@
 @import 'style/color';
 
-.empire-facet-view {
-	margin: 5px;
-	padding: 10px;
-	border: 1px solid $sub-container-border-color;
-	border-radius: 2px;
-}
-
 .empire-facet-name {
 	margin: 0 0 15px;
 	text-align: center;
@@ -24,6 +17,10 @@
 }
 .empire-facet-item:hover {
 	color: $menu-text-mouseover-color;
+}
+
+.empire-facet-item-selected {
+	color: $menu-text-selected-color;
 }
 
 .empire-facet-item-label {

@@ -25,17 +25,17 @@ class HeaderControlPanel extends Component {
     }
     
     render() {
-        const ControlView = CONTROL_VIEWS[this.state.header_control_view_key]
+        const {header_control_view_key} = this.state
+        const ControlView = CONTROL_VIEWS[header_control_view_key] || AvatarOverview
 
         return (
             <div className="header-control-panel container">
-               <ControlView />
+               <ControlView view_key={header_control_view_key}/>
             </div>      
         )
     }
 
     onHeaderControlViewChanged(new_header_control_view_key) {
-        console.log({new_header_control_view_key})
         this.setState({
             header_control_view_key: new_header_control_view_key
         })

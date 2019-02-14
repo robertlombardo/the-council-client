@@ -2,7 +2,7 @@ import EventEmitter from 'events'
 import Dispatcher   from 'dispatcher'
 
 // the stuff we serve
-let header_control_view_key = `avatar_overview`
+let header_control_view_key = `camps` // `avatar_overview`
 
 const UIStateStore = Object.assign({}, EventEmitter.prototype, {
 	// messages we emit
