@@ -17,7 +17,7 @@ var player = {
 
 const PlayerStateStore = Object.assign({}, EventEmitter.prototype, {
 	PLAYER_STATE_CHANGE : `PLAYER_STATE_CHANGE`,
-	YIELD               : `YIELD`,
+	PRODUCT             : `PRODUCT`,
 
 	get: () => {
 		return Object.assign({}, {
@@ -33,7 +33,7 @@ Dispatcher.on(Dispatcher.GOT_API_SOCKET, action => {
 	api_socket = action.payload.api_socket
 
 	api_socket.on(`player_state`, onPlayerState)
-	api_socket.on(`yield`       , onYield)
+	api_socket.on(`product`     , onproduct)
 
 	listeners_registered = true
 })
@@ -45,10 +45,10 @@ function onPlayerState(new_player_state) {
 	PlayerStateStore.emit(PlayerStateStore.PLAYER_STATE_CHANGE, {old_player_state, new_player_state})
 }
 
-function onYield(data) {
-	console.log('\nonYield')
+function onproduct(data) {
+	console.log('\nonproduct')
 	console.log({data})
 
 	onPlayerState(data.player)
-	PlayerStateStore.emit(PlayerStateStore.YIELD, data)
+	PlayerStateStore.emit(PlayerStateStore.PRODUCT, data)
 }

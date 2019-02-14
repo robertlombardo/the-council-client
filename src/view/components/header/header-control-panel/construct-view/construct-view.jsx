@@ -1,6 +1,6 @@
-import React, {Component}  from 'react'
-import {YieldProgressView} from 'view/components'
-import {PlayerStateStore}  from 'stores'
+import React, {Component}     from 'react'
+import {ProducerProgressView} from 'view/components'
+import {PlayerStateStore}     from 'stores'
 import './construct-view.scss'
 
 const TITLES = {
@@ -20,7 +20,7 @@ class ConstructView extends Component {
             construct: empire ? empire.constructs[props.view_key] : {}
         }
 
-        this.onPlayerStateChange        = this.onPlayerStateChange.bind(this)
+        this.onPlayerStateChange = this.onPlayerStateChange.bind(this)
     }
     
     render() {
@@ -36,8 +36,8 @@ class ConstructView extends Component {
                     <div className="construct-view-build-new">
                         build new
                     </div>
-                    <div className="construct-view-yield-progress">
-                        <YieldProgressView yielder={construct} yielder_key="construct" />
+                    <div className="construct-view-product-progress">
+                        <ProducerProgressView producer={construct} producer_key="construct" />
                     </div>
                     <div className="construct-view-manual-controls">
                         manual controls
@@ -55,9 +55,6 @@ class ConstructView extends Component {
 
     componentWillMount() {
         PlayerStateStore.on(PlayerStateStore.PLAYER_STATE_CHANGE, this.onPlayerStateChange)
-    }
-
-    componentDidMount() {
     }
 
     componentWillUnmount() {

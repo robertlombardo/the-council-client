@@ -1,6 +1,6 @@
-import React, {Component}  from 'react'
-import {YieldProgressView} from 'view/components'
-import {PlayerStateStore}  from 'stores'
+import React, {Component}     from 'react'
+import {ProducerProgressView} from 'view/components'
+import {PlayerStateStore}     from 'stores'
 import './citizen-view.scss'
 
 const TITLES = {
@@ -32,8 +32,8 @@ class CitizenView extends Component {
                     <div className="header-empire-facet-view-count">{citizen.count}</div>
                 </div>
                 <div className="sub-container citizen-view-main-panel">
-                    <div className="citizen-view-yield-progress">
-                        <YieldProgressView yielder={citizen} yielder_key="citizen" />
+                    <div className="citizen-view-product-progress">
+                        <ProducerProgressView producer={citizen} producer_key="citizen" />
                     </div>
                     <div className="citizen-view-manual-controls">
                         manual controls
