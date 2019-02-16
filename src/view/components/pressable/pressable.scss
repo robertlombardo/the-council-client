@@ -1,0 +1,16 @@
+.pressable {
+	position: relative;
+	cursor: pointer;
+}
+
+.pressable-child-invis {
+	visibility: hidden;
+}
+
+.pressable-child {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}

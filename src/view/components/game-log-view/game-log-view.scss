@@ -23,7 +23,7 @@
     flex-direction: row;
 }
 
-.msg-input {
+.cmd-input {
     flex-grow: 1;
     border-color: $container-border-color;
     padding: 5px 0 0 5px;
@@ -32,22 +32,26 @@
     font-family: Courier New;
 }
 
-.msg-input:focus {
+.cmd-input:focus {
     outline: none;
     border-color: $speech-color;
 }
 
-.submit-btn, .submit-btn:hover, .submit-btn:focus, .submit-btn:active {
+.submit-btn {
     width: 110px;
-    color: black;
-    border: 0 none;
-    border-radius: 0;
-    font-weight: bold;
+    height: calc(100% - 10px);
+    margin: 5px;
+    border: 1px solid $container-border-color;
+    border-radius: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.submit-btn:hover {
-    cursor: pointer;
-    background: #fff;
+.submit-btn > div {
+    color: #fff;
+    font-size: 20px;
+    // font-weight: bold;
 }
 
 .submit-btn-img {

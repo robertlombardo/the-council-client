@@ -1,4 +1,5 @@
 import React, {Component}   from 'react'
+import {Pressable}          from 'view/components'
 import {RenderTools}        from 'tools'
 import {PlayerStateStore}   from 'stores'
 import {GameCommandActions} from 'action-creators'
@@ -54,7 +55,7 @@ class SpendPanel extends Component {
                         )
                     })}
                 </div>
-                <div className="spend-panel-build-btn no-select" onClick={this.onBuildBtnClick}>+</div>
+                <Pressable child={(<div className="spend-panel-build-btn no-select" onClick={this.onBuildBtnClick}>+</div>)} />
                 <progress className="spend-panel-build-progress" value={this.state.build_progress} max={1}></progress>
             </div>      
         )

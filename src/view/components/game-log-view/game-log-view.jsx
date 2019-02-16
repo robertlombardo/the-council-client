@@ -1,5 +1,5 @@
 import React, {Component}   from 'react'
-import ReactDOM             from 'react-dom'
+import {Pressable}          from 'view/components'
 import GameLogBodyScroll    from './game-log-body-scroll.jsx'
 import {GameCommandActions} from 'action-creators'
 import './game-log-view.scss'
@@ -20,14 +20,17 @@ class GameLogView extends Component {
                     <GameLogBodyScroll />
                 </div>
                 <div className="game-log-input-form" onSubmit={this.onTextEntered} autoComplete="narbles">
-                    <textarea className="msg-input" 
-                        id = 'chat_input'
-                        name='foo'
-                        type="text"
-                        placeholder="Enter a command..."
-                        autoComplete="narbles"
-                        ref="enteredText"/>
-                    <button type="submit" className="form-control btn btn-xs submit-btn" onClick={this.onTextEntered}>SEND</button>
+                    <textarea 
+                        className    = "cmd-input"
+                        ref          = "cmd_input"
+                        type         = "text"
+                        placeholder  = "Enter a command..."
+                    />
+                    <Pressable ref={ref => this.submit_btn = ref} child={(
+                        <div className="submit-btn" onClick={this.onTextEntered}>
+                            <div>SEND</div>
+                        </div>
+                    )} />
                 </div>
             </div>      
         )
@@ -41,32 +44,31 @@ class GameLogView extends Component {
     onTextEntered(event) {
         event.preventDefault()
         
-        var text = this.refs.enteredText.value
+        var text = this.refs.cmd_input.value
         if (text !== ``) GameCommandActions.enterGameCommand(text)
             
         // clear the field
-        this.refs.enteredText.value = ``
+        this.refs.cmd_input.value = ``
     }
 
     componentDidMount() {
-        this.refs.enteredText.focus()
+        this.refs.cmd_input.focus()
 
-        // add ENTER key listener for executing input
-        const node = ReactDOM.findDOMNode(this)
-        if (node instanceof HTMLElement) {
-            const chat_input = node.querySelector(`#chat_input`)
-            if (chat_input) chat_input.onkeypress = event => {
-                if (event.which === 13 && !event.shiftKey) { // ENTER key 
-                    event.preventDefault()      
-                    this.onTextEntered(event)
-                    return false
-                }
+        // add ENTER key listeners for executing input
+        this.refs.cmd_input.onkeydown = event => {
+            if (event.which === 13 && !event.shiftKey) {
+                event.preventDefault()
+                this.submit_btn.onMouseDown() // simulate
+            }
+        }
+        this.refs.cmd_input.onkeyup = event => {
+            if (event.which === 13 && !event.shiftKey) {
+                event.preventDefault()
+                this.submit_btn.onMouseUp() // simulate
+
+                this.onTextEntered(event)
             }
         }
     }
-
-    componentWillUnmount() {
-    }
-    
 }
 export default GameLogView

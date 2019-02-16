@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {Pressable}        from 'view/components'
 import {
     PlayerStateStore,
     UIStateStore,
@@ -55,13 +56,14 @@ class EmpireOverview extends Component {
                                 const selected_class = this.state.header_control_view_key === empire_facet_item_key ? " empire-facet-item-selected" : ""
 
                                 return (
-                                    <div className={"empire-facet-item" + selected_class}
-                                         key={empire_facet_item_key}
-                                         onClick={this.onEmpireFacetItemClicked.bind(null, empire_facet_item_key)}
-                                    >
-                                        <div className="empire-facet-item-label">{EMPIRE_FACET_ITEM_NAMES[empire_facet_item_key]}:</div>
-                                        <div className="empire-facet-item-value">{empire[empire_facet_key][empire_facet_item_key].count}</div>
-                                    </div>
+                                    <Pressable key={empire_facet_item_key} child={(
+                                        <div className={"empire-facet-item" + selected_class}
+                                             onClick={this.onEmpireFacetItemClicked.bind(null, empire_facet_item_key)}
+                                        >
+                                            <div className="empire-facet-item-label">{EMPIRE_FACET_ITEM_NAMES[empire_facet_item_key]}:</div>
+                                            <div className="empire-facet-item-value">{empire[empire_facet_key][empire_facet_item_key].count}</div>
+                                        </div>
+                                    )} />
                                 )
                             })}
                         </div>
