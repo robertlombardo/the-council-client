@@ -17,12 +17,5 @@ class Header extends Component {
             </div>      
         )
     }
-
-    componentDidMount() {
-    }
-
-    componentWillUnmount() {
-    }
-    
 }
 export default Header

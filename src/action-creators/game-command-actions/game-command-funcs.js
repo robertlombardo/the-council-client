@@ -22,6 +22,7 @@ const look = command_body => {
 }
 
 export default {
+    // text commands
     [`'`]    : playerSay,
     [`"`]    : playerSay,
     [`say`]  : playerSay,

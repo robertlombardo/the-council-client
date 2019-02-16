@@ -1,6 +1,11 @@
 import Dispatcher       from 'dispatcher'
 import GameCommandFuncs from './game-command-funcs'
 
+let api_socket
+Dispatcher.on(Dispatcher.GOT_API_SOCKET, action => {
+    api_socket = action.payload.api_socket
+})
+
 const GameCommandActions = {
     enterGameCommand: text => {
         let command, command_body
@@ -27,6 +32,10 @@ const GameCommandActions = {
                 payload : {command}
             })
         }
+    },
+
+    buildConstruct: construct_key => {
+        api_socket.emit(`build_construct`, {construct_key})
     },
 }
 export default GameCommandActions

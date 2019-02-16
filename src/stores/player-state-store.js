@@ -33,7 +33,7 @@ Dispatcher.on(Dispatcher.GOT_API_SOCKET, action => {
 	api_socket = action.payload.api_socket
 
 	api_socket.on(`player_state`, onPlayerState)
-	api_socket.on(`product`     , onproduct)
+	api_socket.on(`product`     , onProduct)
 
 	listeners_registered = true
 })
@@ -45,8 +45,8 @@ function onPlayerState(new_player_state) {
 	PlayerStateStore.emit(PlayerStateStore.PLAYER_STATE_CHANGE, {old_player_state, new_player_state})
 }
 
-function onproduct(data) {
-	console.log('\nonproduct')
+function onProduct(data) {
+	console.log('\nonProduct')
 	console.log({data})
 
 	onPlayerState(data.player)

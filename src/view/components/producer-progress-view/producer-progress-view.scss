@@ -1,12 +1,27 @@
 .producer-progress-view {
 	margin: 5px;
 	display: flex;
-	flex-direction: row
+	flex-direction: row;
+	align-items: center;
 }
  	
 .producer-progress-view-label {
+	width: 150px;
+	height: 52px;
+	margin: 5px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.yield-chance {
+	margin: 3px 10px;
+	text-align: right;
+	font-size: 9px;
 }
 
 .producer-progress-view-bar {
 	flex-grow: 1;
+	height: 18px;
+	margin: 0 0 3px;
 }

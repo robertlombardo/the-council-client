@@ -1,0 +1,33 @@
+.spend-panel {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.spend-panel-cost-view {
+    width: 95px;
+    height: 52px;
+    margin: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    font-size: 9px;
+}
+
+.spend-panel-build-btn {
+    width: 45px;
+    height: 52px;
+    margin: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 48px;
+    cursor: pointer;
+}
+
+.spend-panel-build-progress {
+    flex-grow: 1;
+    margin: 0 5px 5px;
+    height: 18px;
+}

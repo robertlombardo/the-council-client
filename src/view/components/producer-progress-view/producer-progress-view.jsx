@@ -31,7 +31,13 @@ class ProducerProgressView extends Component {
         return (
             <div className="producer-progress-view">
                 <div className="producer-progress-view-label">
-                    {/*Object.keys(product)*/}
+                    {Object.keys(products || {}).map(product_key => {
+                        const product = products[product_key]
+
+                        return (
+                            <div className="yield-chance" key={product_key}>{product.count} {product_key} ({(product.weight / total_product_chance_weight * 100).toFixed(1)}%)</div>
+                        )
+                    })}
                 </div>
                 <progress className="producer-progress-view-bar" value={this.state.producer_progress} max={1}></progress>
             </div>      

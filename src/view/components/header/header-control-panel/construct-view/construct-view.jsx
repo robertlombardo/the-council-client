@@ -1,5 +1,8 @@
 import React, {Component}     from 'react'
-import {ProducerProgressView} from 'view/components'
+import {
+    ProducerProgressView,
+    SpendPanel,
+} from 'view/components'
 import {PlayerStateStore}     from 'stores'
 import './construct-view.scss'
 
@@ -24,20 +27,21 @@ class ConstructView extends Component {
     }
     
     render() {
+        const {view_key}  = this.props
         const {construct} = this.state
 
         return (
             <div className="header-empire-facet-view">
                 <div className="sub-container header-empire-facet-view-quick-info">
-                    <div className="header-empire-facet-view-title">{TITLES[this.props.view_key]}</div>
+                    <div className="header-empire-facet-view-title">{TITLES[view_key]}</div>
                     <div className="header-empire-facet-view-count">{construct.count}</div>
                 </div>
                 <div className="sub-container construct-view-main-panel">
-                    <div className="construct-view-build-new">
-                        build new
-                    </div>
                     <div className="construct-view-product-progress">
                         <ProducerProgressView producer={construct} producer_key="construct" />
+                    </div>
+                    <div className="construct-view-build-new">
+                        <SpendPanel facet_item={construct} facet_item_key={view_key} />
                     </div>
                     <div className="construct-view-manual-controls">
                         manual controls
