@@ -3,7 +3,6 @@ import Dispatcher   from 'dispatcher'
 
 // private
 let api_socket
-let listeners_registered = false
 
 // the stuff we serve
 var player = {
@@ -28,14 +27,18 @@ const PlayerStateStore = Object.assign({}, EventEmitter.prototype, {
 export default PlayerStateStore
 
 Dispatcher.on(Dispatcher.GOT_API_SOCKET, action => {
-	if (listeners_registered) return
-
 	api_socket = action.payload.api_socket
 
-	api_socket.on(`player_state`, onPlayerState)
-	api_socket.on(`product`     , onProduct)
+	if (!api_socket.player_state_store_listeners_registered) {
+		api_socket.on(`player_state`,             onPlayerState)
+		api_socket.on(`product`     ,             onProduct)
+		api_socket.on(`construct_build_started`,  onConstructBuildStarted)
+		api_socket.on(`construct_build_complete`, onConstructBuildComplete)
+		// TODO - `already_building`
+		// TODO - `not_enough_resources`
 
-	listeners_registered = true
+		api_socket.player_state_store_listeners_registered = true
+	}
 })
 
 function onPlayerState(new_player_state) {
@@ -46,9 +49,14 @@ function onPlayerState(new_player_state) {
 }
 
 function onProduct(data) {
-	console.log('\nonProduct')
-	console.log({data})
-
 	onPlayerState(data.player)
 	PlayerStateStore.emit(PlayerStateStore.PRODUCT, data)
+}
+
+function onConstructBuildStarted(data) {
+	onPlayerState(data.player)
+}
+
+function onConstructBuildComplete(data) {
+	onPlayerState(data.player)
 }

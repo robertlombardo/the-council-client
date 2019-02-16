@@ -1,19 +1,34 @@
 import React, {Component}   from 'react'
+import {RenderTools}        from 'tools'
 import {PlayerStateStore}   from 'stores'
 import {GameCommandActions} from 'action-creators'
 import './spend-panel.scss'
+
+const {makeProgressTween} = RenderTools
 
 class SpendPanel extends Component {
 
     constructor(props, context) {
         super(props, context)
 
+        const {facet_item}   = this.props
+        const {build_time}   = facet_item
+        const build_progress = facet_item && facet_item.build_start_time && build_time ? 
+            (new Date().getTime() - facet_item.build_start_time) / build_time : 0
+
         this.state = {
-            empire: PlayerStateStore.get().player.empire
+            empire: PlayerStateStore.get().player.empire,
+            build_progress,
         }
 
-        this.onBuildBtnClick     = this.onBuildBtnClick.bind(this)
-        this.onPlayerStateChange = this.onPlayerStateChange.bind(this)
+        this.onBuildBtnClick       = this.onBuildBtnClick.bind(this)
+        this.onPlayerStateChange   = this.onPlayerStateChange.bind(this)
+        this.onBuildProgressUpdate = this.onBuildProgressUpdate.bind(this)
+
+        if (facet_item.build_start_time) {
+            if (this.build_progress_tween) this.build_progress_tween.kill()
+            this.build_progress_tween = makeProgressTween(build_progress, build_time, this.onBuildProgressUpdate)
+        }
     }
     
     render() {
@@ -39,19 +54,36 @@ class SpendPanel extends Component {
                         )
                     })}
                 </div>
-                <div className="spend-panel-build-btn" onClick={this.onBuildBtnClick}>+</div>
-                <progress className="spend-panel-build-progress" value={0.3} max={1}></progress>
+                <div className="spend-panel-build-btn no-select" onClick={this.onBuildBtnClick}>+</div>
+                <progress className="spend-panel-build-progress" value={this.state.build_progress} max={1}></progress>
             </div>      
         )
     }
 
-    onBuildBtnClick() {
+    onBuildBtnClick(event) {
         GameCommandActions.buildConstruct(this.props.facet_item_key)
     }
 
     onPlayerStateChange(data) {
+        const {facet_item}   = this.props
+        const {build_time}   = facet_item
+        const build_progress = facet_item && facet_item.build_start_time && build_time ? 
+            (new Date().getTime() - facet_item.build_start_time) / build_time : 0
+
         this.setState({
-            empire: PlayerStateStore.get().player.empire
+            empire: PlayerStateStore.get().player.empire,
+            build_progress,
+        })
+
+        if (facet_item.build_start_time) {
+            if (this.build_progress_tween) this.build_progress_tween.kill()
+            this.build_progress_tween = makeProgressTween(build_progress, build_time, this.onBuildProgressUpdate)
+        }
+    }
+
+    onBuildProgressUpdate(progress_dummy) {
+        this.setState({
+            build_progress: progress_dummy.progress
         })
     }
 
