@@ -1,14 +1,14 @@
-.producer-progress-view {
+.product-progress-view {
 	margin: 5px;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 }
  	
-.producer-progress-view-label {
+.product-progress-view-label {
 	width: 150px;
-	height: 26px;
-	margin: 5px;
+	height: 18px;
+	margin: 0 5px;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -21,7 +21,7 @@
 	pointer-events: none;
 }
 
-.producer-progress-view-bar {
+.product-progress-view-bar {
 	flex-grow: 1;
 	height: 18px;
 	margin: 0 0 3px;

@@ -1,6 +1,6 @@
-import React, {Component}     from 'react'
-import {ProducerProgressView} from 'view/components'
-import {PlayerStateStore}     from 'stores'
+import React, {Component}    from 'react'
+import {ProductProgressView} from 'view/components'
+import {PlayerStateStore}    from 'stores'
 import './citizen-view.scss'
 
 const TITLES = {
@@ -35,7 +35,13 @@ class CitizenView extends Component {
                     <div className="citizen-view-product-progress">
                         {Object.keys(citizen.products).map(product_key => {
                             return (
-                                <ProducerProgressView key={product_key} producer={citizen.products[product_key]} producer_key={product_key} />
+                                <ProductProgressView 
+                                    key              = {product_key}
+                                    product          = {citizen.products[product_key]}
+                                    product_key      = {product_key}
+                                    empire_facet     = {citizen} 
+                                    empire_facet_key = "citizens"
+                                />
                             )})
                         }
                     </div>

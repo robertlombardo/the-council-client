@@ -1,9 +1,9 @@
-import React, {Component}     from 'react'
+import React, {Component} from 'react'
 import {
-    ProducerProgressView,
+    ProductProgressView,
     SpendPanel,
-} from 'view/components'
-import {PlayerStateStore}     from 'stores'
+}                         from 'view/components'
+import {PlayerStateStore} from 'stores'
 import './construct-view.scss'
 
 const TITLES = {
@@ -40,7 +40,13 @@ class ConstructView extends Component {
                     <div className="construct-view-product-progress">
                         {Object.keys(construct.products).map(product_key => {
                             return (
-                                <ProducerProgressView key={product_key} producer={construct.products[product_key]} producer_key={product_key} />
+                                <ProductProgressView
+                                    key              = {product_key}
+                                    product          = {construct.products[product_key]}
+                                    product_key      = {product_key}
+                                    empire_facet     = {construct}
+                                    empire_facet_key = "constructs"
+                                />
                             )})
                         }
                     </div>

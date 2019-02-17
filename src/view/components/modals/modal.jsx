@@ -3,7 +3,7 @@ import {
     WhichConstructUpgradeModal
 }                         from './modal-content-index'
 import Dispatcher         from 'dispatcher'
-import TweenMax           from 'gsap'
+import TweenMax, {Linear} from 'gsap'
 import './modal.scss'
 
 class Modal extends Component {
@@ -40,12 +40,13 @@ class Modal extends Component {
     }
 
     hide(event) {
-        TweenMax.to(this.backdrop, 0.2, {
+        TweenMax.to(this.backdrop, 0.17, {
             autoAlpha: 0
         })
 
-        TweenMax.to(this.modal_content, 0.2, {
-            x          : -window.innerWidth,
+        TweenMax.to(this.modal_content, 0.17, {
+            autoAlpha  : 0,
+            x          : `-=250`,
             onComplete : () => {this.setState({visible: false})},
         })
     }
@@ -59,12 +60,14 @@ class Modal extends Component {
 
         requestAnimationFrame(() => {
             this.backdrop.alpha = 0
-            TweenMax.to(this.backdrop, 0.25, {
+            TweenMax.to(this.backdrop, 0.2, {
                 alpha: 1
             })
 
-            TweenMax.from(this.modal_content, 0.25, {
-                x: window.innerWidth
+            TweenMax.from(this.modal_content, 0.2, {
+                autoAlpha : 0,
+                x         : `+=250`,
+                ease      : Linear.easeNone
             })
         })
     }
