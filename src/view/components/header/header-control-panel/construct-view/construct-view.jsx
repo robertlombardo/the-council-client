@@ -20,7 +20,7 @@ class ConstructView extends Component {
         const {empire} = PlayerStateStore.get().player
 
         this.state = {
-            construct: empire ? empire.constructs[props.view_key] : {}
+            construct: empire ? empire.constructs[props.view_key] : {products: {}}
         }
 
         this.onPlayerStateChange = this.onPlayerStateChange.bind(this)
@@ -38,7 +38,11 @@ class ConstructView extends Component {
                 </div>
                 <div className="sub-container construct-view-main-panel">
                     <div className="construct-view-product-progress">
-                        <ProducerProgressView producer={construct} producer_key="construct" />
+                        {Object.keys(construct.products).map(product_key => {
+                            return (
+                                <ProducerProgressView key={product_key} producer={construct.products[product_key]} producer_key={product_key} />
+                            )})
+                        }
                     </div>
                     <div className="construct-view-build-new">
                         <SpendPanel facet_item={construct} facet_item_key={view_key} />

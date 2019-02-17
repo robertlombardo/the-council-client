@@ -1,3 +1,5 @@
+@import 'style/color';
+
 .spend-panel {
     display: flex;
     flex-direction: row;
@@ -23,7 +25,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 48px;
+    font-size: 56px;
+    -webkit-text-stroke: 1px $container-border-color;
     cursor: pointer;
 }
 

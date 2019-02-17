@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {
     GameLogView,
     Header,
+    Modal,
     Sidebar,
 } from 'view/components'
 import './main-view.scss'
@@ -15,6 +16,7 @@ class MainView extends Component {
                     <GameLogView />
                 </div>
                 <Sidebar />
+                <Modal />
             </div>
         )
     }

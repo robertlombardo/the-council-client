@@ -42,7 +42,7 @@ class SpendPanel extends Component {
                     {Object.keys(cost || {}).map(cost_key => {
                         const player_has   = empire ? empire.resources[cost_key].count : 0
                         const player_needs = cost[cost_key]
-                        const color        = player_has >= player_needs ? `green` : `red`
+                        const color        = player_has >= player_needs ? `#00ff00` : `#ff0000`
 
                         return (
                             <div 
@@ -56,13 +56,14 @@ class SpendPanel extends Component {
                     })}
                 </div>
                 <Pressable child={(<div className="spend-panel-build-btn no-select" onClick={this.onBuildBtnClick}>+</div>)} />
-                <progress className="spend-panel-build-progress" value={this.state.build_progress} max={1}></progress>
+                <progress className="progress spend-panel-build-progress" value={this.state.build_progress} max={1}></progress>
             </div>      
         )
     }
 
-    onBuildBtnClick(event) {
-        GameCommandActions.buildConstruct(this.props.facet_item_key)
+    onBuildBtnClick() {
+        const {facet_item, facet_item_key} = this.props
+        GameCommandActions.buildConstruct(facet_item, facet_item_key)
     }
 
     onPlayerStateChange(data) {

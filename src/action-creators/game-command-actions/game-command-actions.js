@@ -34,8 +34,15 @@ const GameCommandActions = {
         }
     },
 
-    buildConstruct: construct_key => {
-        api_socket.emit(`build_construct`, {construct_key})
+    buildConstruct: (construct, construct_key) => {
+        Dispatcher.dispatch({
+            type    : Dispatcher.BUILD_CONSTRUCT_REQUESTED,
+            payload : {construct, construct_key}
+        })
+    },
+
+    confirmBuildConstruct: (construct_key, product_key) => {
+        api_socket.emit(`build_construct`, {construct_key, product_key})
     },
 }
 export default GameCommandActions

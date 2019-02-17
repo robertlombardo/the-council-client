@@ -22,24 +22,14 @@ class ProducerProgressView extends Component {
     }
     
     render() {
-        const {producer} = this.props
-        const {products} = producer
-
-        let total_product_chance_weight = 0
-        for (let product_key in products) total_product_chance_weight += products[product_key].weight
+        const {producer, producer_key} = this.props
 
         return (
             <div className="producer-progress-view">
                 <div className="producer-progress-view-label">
-                    {Object.keys(products || {}).map(product_key => {
-                        const product = products[product_key]
-
-                        return (
-                            <div className="yield-chance" key={product_key}>{product.count} {product_key} ({(product.weight / total_product_chance_weight * 100).toFixed(1)}%)</div>
-                        )
-                    })}
+                    <div className="yield-chance">{producer.count} {producer_key}</div>
                 </div>
-                <progress className="producer-progress-view-bar" value={this.state.producer_progress} max={1}></progress>
+                <progress className="progress producer-progress-view-bar" value={this.state.producer_progress} max={1}></progress>
             </div>      
         )
     }

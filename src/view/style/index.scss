@@ -1,29 +1,30 @@
+@import 'style/color';
 @import 'style/containers';
 
 html {
-	width: 100%;
-	height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  background: #333;
-  color: #fff;
-  font-family: Courier New, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  font-size: 13px;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #333;
+    color: #fff;
+    font-family: Courier New, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+      "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+      sans-serif;
+    font-size: 13px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 .root {
-	width: 100%;
-	height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 .no-select {
@@ -33,3 +34,19 @@ body {
     -ms-user-select: none;     /* IE10+ */
 }
 
+.progress {
+    -webkit-appearance: none;
+    border: none;
+}
+
+.progress::-webkit-progress-bar {
+    border-radius: 2px;
+    background-color: $sub-container-border-color;
+    padding: 2px;
+}
+
+.progress::-webkit-progress-value {
+    border-radius: 1px;
+    background-color: $container-border-color;
+    box-shadow: 2px -13px 26px -8px rgba(0, 0, 0, 0.7) inset;
+}

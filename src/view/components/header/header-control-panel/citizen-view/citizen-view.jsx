@@ -16,7 +16,7 @@ class CitizenView extends Component {
         const {empire} = PlayerStateStore.get().player
 
         this.state = {
-            citizen: empire ? empire.citizens[props.view_key] : {}
+            citizen: empire ? empire.citizens[props.view_key] : {products: {}}
         }
 
         this.onPlayerStateChange = this.onPlayerStateChange.bind(this)
@@ -33,7 +33,11 @@ class CitizenView extends Component {
                 </div>
                 <div className="sub-container citizen-view-main-panel">
                     <div className="citizen-view-product-progress">
-                        <ProducerProgressView producer={citizen} producer_key="citizen" />
+                        {Object.keys(citizen.products).map(product_key => {
+                            return (
+                                <ProducerProgressView key={product_key} producer={citizen.products[product_key]} producer_key={product_key} />
+                            )})
+                        }
                     </div>
                     <div className="citizen-view-manual-controls">
                         manual controls
